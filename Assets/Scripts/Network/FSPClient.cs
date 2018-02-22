@@ -104,9 +104,9 @@ namespace Pomutto
 
 		private bool DoReceive()
 		{
-			byte[] buffer;
+			byte[] buffer = null;
 			m_UDPSocket.ReceiveBuffer(buffer);
-			
+			return true;
 		}
 	}
 }
