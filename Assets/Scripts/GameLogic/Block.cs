@@ -49,6 +49,7 @@ namespace Pomutto
             {
                 m_LogicPosition = value;
                 transform.localPosition = new Vector3(m_LogicPosition.y * BLOCK_SIZE, m_LogicPosition.x * BLOCK_SIZE);
+                transform.name = string.Format("Block(r{0}_c{1})", m_LogicPosition.x, m_LogicPosition.y);
             }
         }
         

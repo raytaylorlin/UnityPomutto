@@ -84,6 +84,11 @@ namespace Pomutto
 		{
 			InputManager.Instance.Tick();
 			CurrentGroup.Tick();
+
+			if (Input.GetKeyDown(KeyCode.B))
+			{
+				SwitchBlockGroup();
+			}
 		}
 	}
 }
