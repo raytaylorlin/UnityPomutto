@@ -24,9 +24,10 @@ namespace Pomutto
         
         [ReadOnly] public EType BlockType;
 
-        private Tweener m_Tweener;
+        
         private EType m_Type;
         private SpriteRenderer m_Renderer;
+        private Vector2 m_LogicPosition;
         
         private static Vector4 RED_HSL = new Vector4(0.35f, 0, 0, 0);
         private static Vector4 BLUE_HSL = new Vector4(0, 0, 0, 0);
@@ -37,6 +38,19 @@ namespace Pomutto
         {
             RED_HSL, BLUE_HSL, GREEN_HSL, YELLOW_HSL
         };
+
+        public static int BLOCK_SIZE = 40;
+        
+        
+        public Vector2 LogicPosition
+        {
+            get { return m_LogicPosition; }
+            set
+            {
+                m_LogicPosition = value;
+                transform.localPosition = new Vector3(m_LogicPosition.y * BLOCK_SIZE, m_LogicPosition.x * BLOCK_SIZE);
+            }
+        }
         
         void Start ()
         {
@@ -46,27 +60,9 @@ namespace Pomutto
 	
         void Update ()
         {
-            if (m_Tweener == null)
-            {
-                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-                {
-                    float x = transform.localPosition.x;
-                    m_Tweener = transform.DOLocalMoveX(x - offset, duration).SetEase(easeType);
-                    m_Tweener.OnComplete(OnTweenCompleted);
-                }
-                else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-                {
-                    float x = transform.localPosition.x;
-                    m_Tweener = transform.DOLocalMoveX(x + offset, duration).SetEase(easeType);
-                    m_Tweener.OnComplete(OnTweenCompleted);
-                }
-            }
         }
 
-        private void OnTweenCompleted()
-        {
-            m_Tweener = null;
-        }
+        
 
         public void SetType(EType type)
         {
@@ -74,6 +70,7 @@ namespace Pomutto
             m_Renderer = GetComponent<SpriteRenderer>();
             m_Renderer.material.SetVector("_HSLAAdjust", HSL_MAP[(int) type]);
         }
+
     }
 }
 
