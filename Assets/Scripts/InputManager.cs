@@ -27,6 +27,7 @@ namespace Pomutto
 		public bool LeftPress { get; set; }
 		public bool RightPress { get; set; }
 		public bool DownPress { get; set; }
+		public bool RotateClick { get; set; }
 
 		public void Tick()
 		{
@@ -36,6 +37,8 @@ namespace Pomutto
 				Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D);
 			DownPress = 
 				Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S);
+			RotateClick =
+				Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W);
 		}
 	}
 }

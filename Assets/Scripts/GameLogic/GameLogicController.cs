@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using PathologicalGames;
 using UnityEngine;
@@ -14,6 +15,11 @@ namespace Pomutto
 		{
 			x = _x;
 			y = _y;
+		}
+
+		public override string ToString()
+		{
+			return string.Format("({0}, {1})", x, y);
 		}
 	}
 	
@@ -58,15 +64,20 @@ namespace Pomutto
 				m_Map.Add(row);
 			}
 
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 1; i++)
 			{
-				for (int j = 0; j < LOGIC_WIDTH - 3; j++)
+				for (int j = 0; j < LOGIC_WIDTH - 5; j++)
 				{
 					Block block = BlockPool.Instance.Spawn(BlockPrefab, MapTransform);
-					block.LogicPosition = new Point(i, j);
-					m_Map[i][j] = block;
+					SetMap(i, j, block);
 				}
 			}
+		}
+
+		private void SetMap(int x, int y, Block block)
+		{
+			block.LogicPosition = new Point(x, y);
+			m_Map[x][y] = block;
 		}
 
 		private void InitGroup()
@@ -75,6 +86,8 @@ namespace Pomutto
 			Debug.Log(m_InitGroupPosition);
 			CreateBlockGroup(NextGroup);
 			SwitchBlockGroup();
+			
+			CurrentGroup.OnBlockGroupStop += CurrentGroupOnBlockGroupStop;
 		}
 
 		private void CreateBlockGroup(BlockGroup group)
@@ -110,6 +123,8 @@ namespace Pomutto
 
 		public Point GetLogicPosition(Vector2 realPos)
 		{
+			realPos.x -= realPos.x < 0 ? Block.BLOCK_SIZE : 0;
+			realPos.y -= realPos.y < 0 ? Block.BLOCK_SIZE : 0;
 			return new Point((int) (realPos.y / Block.BLOCK_SIZE),
 				(int) (realPos.x / Block.BLOCK_SIZE));
 		}
@@ -124,5 +139,22 @@ namespace Pomutto
 			}
 			return null;
 		}
+		
+		private void CurrentGroupOnBlockGroupStop(Point collisionPoint)
+		{
+			Block upBlock = CurrentGroup.UpBlock;
+			Block downBlock = CurrentGroup.DownBlock;
+			
+			upBlock.transform.SetParent(MapTransform);
+			SetMap(collisionPoint.x + 2, collisionPoint.y, upBlock);
+//			upBlock.LogicPosition = new Point(collisionPoint.x, collisionPoint.y + 2);
+			
+			downBlock.transform.SetParent(MapTransform);
+//			downBlock.LogicPosition = new Point(collisionPoint.x, collisionPoint.y + 1);
+			SetMap(collisionPoint.x + 1, collisionPoint.y, downBlock);
+			
+			SwitchBlockGroup();
+		}
+
 	}
 }
