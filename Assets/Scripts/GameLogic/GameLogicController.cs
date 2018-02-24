@@ -47,6 +47,8 @@ namespace Pomutto
 
 		void Start()
 		{
+			DG.Tweening.DOTween.Init();
+			
 			InitBlocks();
 			InitGroup();
 		}
@@ -147,11 +149,12 @@ namespace Pomutto
 			
 			upBlock.transform.SetParent(MapTransform);
 			SetMap(collisionPoint.x + 2, collisionPoint.y, upBlock);
-//			upBlock.LogicPosition = new Point(collisionPoint.x, collisionPoint.y + 2);
+			upBlock.PlayAnimation(Block.EAnimationType.Fall);
 			
 			downBlock.transform.SetParent(MapTransform);
 //			downBlock.LogicPosition = new Point(collisionPoint.x, collisionPoint.y + 1);
 			SetMap(collisionPoint.x + 1, collisionPoint.y, downBlock);
+			downBlock.PlayAnimation(Block.EAnimationType.Fall);
 			
 			SwitchBlockGroup();
 		}

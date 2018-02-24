@@ -15,6 +15,13 @@ namespace Pomutto
             Yellow,
             Max
         }
+
+        public enum EAnimationType
+        {
+            Normal,
+            Fall,
+            Fade
+        }
         
         public Ease easeType;
         public float duration;
@@ -27,7 +34,10 @@ namespace Pomutto
         
         private EType m_Type;
         private SpriteRenderer m_Renderer;
+        private Animator m_Animator;
         private Point m_LogicPosition;
+        private static bool m_InitConfig = false;
+        private static Dictionary<EAnimationType, string> m_AnimationMap = new Dictionary<EAnimationType, string>();
         
         private static Vector4 RED_HSL = new Vector4(0.35f, 0, 0, 0);
         private static Vector4 BLUE_HSL = new Vector4(0, 0, 0, 0);
@@ -53,19 +63,26 @@ namespace Pomutto
                 transform.name = string.Format("Block(r{0}_c{1})", m_LogicPosition.x, m_LogicPosition.y);
             }
         }
-        
-        void Start ()
+
+        void Awake()
         {
-            DOTween.Init();
-            
-        }
-	
-        void Update ()
-        {
+            m_Renderer = GetComponent<SpriteRenderer>();
+            m_Animator = GetComponent<Animator>();
+
+            if (!m_InitConfig)
+            {
+                InitAnimationMap();
+                m_InitConfig = true;
+            }
         }
 
+        private void InitAnimationMap()
+        {
+            m_AnimationMap.Add(EAnimationType.Normal, "Normal");
+            m_AnimationMap.Add(EAnimationType.Fall, "Fall");
+            m_AnimationMap.Add(EAnimationType.Fade, "Fade");
+        }
         
-
         public void SetType(EType type)
         {
             BlockType = m_Type = type;
@@ -73,6 +90,10 @@ namespace Pomutto
             m_Renderer.material.SetVector("_HSLAAdjust", HSL_MAP[(int) type]);
         }
 
+        public void PlayAnimation(EAnimationType type)
+        {
+            m_Animator.Play(m_AnimationMap[type]);
+        }
     }
 }
 

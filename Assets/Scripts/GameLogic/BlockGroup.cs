@@ -46,7 +46,6 @@ namespace Pomutto
 			Vector3 pos = transform.localPosition;
 			Vector2 targetPos = new Vector2(pos.x, pos.y + downSpeed);
 			Vector2 testPos = new Vector2(targetPos.x, targetPos.y);
-//			Vector2 testPos2 = new Vector2(testPos.x, testPos.y - Block.HALF_BLOCK_SIZE);
 			Point testPoint = Controller.GetLogicPosition(testPos);
 			Block testBlock = Controller.GetBlock(testPos);
 			if (testPoint.x == -1 || testBlock != null)
@@ -118,19 +117,16 @@ namespace Pomutto
 				m_Tweener = UpBlock.transform.DOLocalMoveY(-Block.BLOCK_SIZE, TweenDuration)
 					.SetRelative(true)
 					.SetEase(EaseType)
-					.OnComplete(OnRotateTweenCompleted);
+					.OnComplete(OnTweenCompleted);
 				DownBlock.transform.DOLocalMoveY(Block.BLOCK_SIZE, TweenDuration)
 					.SetRelative(true)
 					.SetEase(EaseType);
+				
+				// 逻辑上交换上下方块
+				Block temp = UpBlock;
+				UpBlock = DownBlock;
+				DownBlock = temp; 
 			}
-		}
-
-		private void OnRotateTweenCompleted()
-		{
-			Block temp = UpBlock;
-			UpBlock = DownBlock;
-			DownBlock = temp; 
-			OnTweenCompleted();
 		}
 		
 		private void OnTweenCompleted()
