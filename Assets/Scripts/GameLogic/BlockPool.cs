@@ -34,16 +34,23 @@ namespace Pomutto
 
 		public Block Spawn(GameObject prefab, Transform parent)
 		{
-//			if (!m_HasInit)
-//			{
-//				Debug.LogError("The block pool is not inited.");
-//				return null;
-//			}
-//			
+//			int type = Random.Range(0, (int) Block.EType.Max);
+			int type = 3;
+			
+			return Spawn(prefab, parent, type);
+		}
+		
+		public Block Spawn(GameObject prefab, Transform parent, int type)
+		{
 			Transform transform = m_BlockPool.Spawn(prefab.transform, parent);
 			Block block = transform.GetComponent<Block>();
-			block.SetType((Block.EType) Random.Range(0, (int) Block.EType.Max));
+			block.SetType((Block.EType) type);
 			return block;
+		}
+
+		public void Despawn(GameObject go)
+		{
+			m_BlockPool.Despawn(go.transform);
 		}
 	}
 }
