@@ -20,7 +20,6 @@ namespace Pomutto
 		public Block DownBlock;
 		
 		private Tweener m_Tweener;
-		private bool m_IsTweening = false;
 
 		public BlockGroup(Block up, Block down)
 		{
@@ -38,7 +37,7 @@ namespace Pomutto
 		private void CheckDownMove()
 		{
 			float downSpeed = DownSpeed * Time.deltaTime;
-			if (InputManager.Instance.DownPress)
+			if (InputManager.Instance.DownPress && m_Tweener == null)
 			{
 				downSpeed *= 8;
 			}
@@ -64,7 +63,7 @@ namespace Pomutto
 
 		private void CheckHorizontalMove()
 		{
-			if (m_Tweener != null)
+			if (m_Tweener != null || InputManager.Instance.DownPress)
 			{
 				return;
 			}
@@ -100,8 +99,7 @@ namespace Pomutto
 				return false;
 			}
 			Vector3 pos = transform.localPosition;
-			Vector2 testPos = new Vector2(pos.x + Block.BLOCK_SIZE * (isLeftMove ? -1 : 1),
-				pos.y - Block.BLOCK_SIZE);
+			Vector2 testPos = new Vector2(pos.x + Block.BLOCK_SIZE * (isLeftMove ? -1 : 1), pos.y);
 			if (Controller.GetBlock(testPos) != null)
 			{
 				return false;
@@ -111,7 +109,9 @@ namespace Pomutto
 
 		private void CheckRotate()
 		{
-			if (InputManager.Instance.RotateClick && m_Tweener == null)
+			if (InputManager.Instance.RotateClick && 
+			    m_Tweener == null &&
+			    !InputManager.Instance.DownPress)
 			{
 				m_Tweener = UpBlock.transform.DOLocalMoveY(-Block.BLOCK_SIZE, TweenDuration)
 					.SetRelative(true)

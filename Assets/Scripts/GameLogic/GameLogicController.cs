@@ -205,11 +205,11 @@ namespace Pomutto
 				if (clearSet.Count >= 3)
 				{
 					m_ClearSetList.Add(clearSet);
-					Debug.Log("Find clear set");
-					for (int i = 0; i < clearSet.Count; i++)
-					{
-						Debug.Log(clearSet[i].name);
-					}
+//					Debug.Log("Find clear set");
+//					for (int i = 0; i < clearSet.Count; i++)
+//					{
+//						Debug.Log(clearSet[i].name);
+//					}
 				}
 				// 否则重置搜索过的方块为“未检查”状态
 				else

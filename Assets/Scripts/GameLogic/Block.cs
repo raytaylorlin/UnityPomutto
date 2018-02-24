@@ -94,7 +94,10 @@ namespace Pomutto
         public void SetType(EType type)
         {
             BlockType = m_Type = type;
-            m_Renderer = GetComponent<SpriteRenderer>();
+            if (m_Renderer == null)
+            {
+                m_Renderer = GetComponent<SpriteRenderer>();
+            }
             m_Renderer.material.SetFloat("_Alpha", 1);
             m_Renderer.material.SetVector("_HSLAAdjust", HSL_MAP[(int) type]);
         }
