@@ -48,7 +48,7 @@ namespace Pomutto
 			Vector2 testPos = new Vector2(targetPos.x, targetPos.y);
 			Point testPoint = Controller.GetLogicPosition(testPos);
 			Block testBlock = Controller.GetBlock(testPos);
-			if (testPoint.x == -1 || testBlock != null)
+			if (testPoint.y == -1 || testBlock != null)
 			{
 				if (OnBlockGroupStop != null)
 				{
@@ -81,7 +81,6 @@ namespace Pomutto
 				
 			if (factor != 0 && m_Tweener == null)
 			{
-				float x = transform.localPosition.x;
 				m_Tweener = transform.DOLocalMoveX(Block.BLOCK_SIZE * factor, TweenDuration)
 					.SetRelative(true)
 					.SetEase(EaseType)

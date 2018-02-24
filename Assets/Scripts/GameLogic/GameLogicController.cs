@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
 using PathologicalGames;
 using UnityEngine;
 
@@ -27,18 +28,22 @@ namespace Pomutto
 	{
 		public GameObject BlockPrefab;
 		public Transform MapTransform;
-		public Transform GroupContainer;
+		public BlockGroup CurrentGroup;
+		public BlockGroup NextGroup;
 		
-		private List<List<Block>> m_Map;
+		
 		public const int LOGIC_WIDTH = 7;
 		public const int LOGIC_REAL_HEIGHT = 12;
 		public const int LOGIC_EXTEND_HEIGHT = 4;
 		public const int LOGIC_HEIGHT = LOGIC_REAL_HEIGHT + LOGIC_EXTEND_HEIGHT;
 		public const int MAP_WIDTH = Block.BLOCK_SIZE * (LOGIC_WIDTH - 1);
 
-		public BlockGroup CurrentGroup;
-		public BlockGroup NextGroup;
+		private List<List<Block>> m_Map;
+		private Queue<Block> m_CheckClearQueue = new Queue<Block>();
+		private HashSet<Block> m_BlockHasChecked = new HashSet<Block>();
+		private List<List<Block>> m_ClearSetList = new List<List<Block>>();
 		private Vector3 m_InitGroupPosition;
+		
 
 		public List<List<Block>> Map
 		{
@@ -56,19 +61,19 @@ namespace Pomutto
 		private void InitBlocks()
 		{
 			m_Map = new List<List<Block>>(LOGIC_HEIGHT);
-			for (int i = 0; i < LOGIC_HEIGHT; i++)
+			for (int j = 0; j < LOGIC_HEIGHT; j++)
 			{
 				List<Block> row = new List<Block>(LOGIC_WIDTH);
-				for (int j = 0; j < LOGIC_WIDTH; j++)
+				for (int i = 0; i < LOGIC_WIDTH; i++)
 				{
 					row.Add(null);
 				}
 				m_Map.Add(row);
 			}
 
-			for (int i = 0; i < 1; i++)
+			for (int j = 0; j < 1; j++)
 			{
-				for (int j = 0; j < LOGIC_WIDTH - 5; j++)
+				for (int i = 0; i < LOGIC_WIDTH - 5; i++)
 				{
 					Block block = BlockPool.Instance.Spawn(BlockPrefab, MapTransform);
 					SetMap(i, j, block);
@@ -79,7 +84,7 @@ namespace Pomutto
 		private void SetMap(int x, int y, Block block)
 		{
 			block.LogicPosition = new Point(x, y);
-			m_Map[x][y] = block;
+			m_Map[y][x] = block;
 		}
 
 		private void InitGroup()
@@ -95,7 +100,7 @@ namespace Pomutto
 		private void CreateBlockGroup(BlockGroup group)
 		{
 			group.UpBlock = BlockPool.Instance.Spawn(BlockPrefab, group.transform);
-			group.UpBlock.LogicPosition = new Point(1, 0);
+			group.UpBlock.LogicPosition = new Point(0, 1);
 			group.DownBlock = BlockPool.Instance.Spawn(BlockPrefab, group.transform);
 			group.DownBlock.LogicPosition = new Point(0, 0);
 		}
@@ -105,7 +110,7 @@ namespace Pomutto
 			CurrentGroup.transform.localPosition = m_InitGroupPosition;
 			CurrentGroup.UpBlock = NextGroup.UpBlock;
 			CurrentGroup.UpBlock.transform.SetParent(CurrentGroup.transform);
-			CurrentGroup.UpBlock.LogicPosition = new Point(1, 0);
+			CurrentGroup.UpBlock.LogicPosition = new Point(0, 1);
 			CurrentGroup.DownBlock = NextGroup.DownBlock;
 			CurrentGroup.DownBlock.transform.SetParent(CurrentGroup.transform);
 			CurrentGroup.DownBlock.LogicPosition = new Point(0, 0);
@@ -127,37 +132,37 @@ namespace Pomutto
 		{
 			realPos.x -= realPos.x < 0 ? Block.BLOCK_SIZE : 0;
 			realPos.y -= realPos.y < 0 ? Block.BLOCK_SIZE : 0;
-			return new Point((int) (realPos.y / Block.BLOCK_SIZE),
-				(int) (realPos.x / Block.BLOCK_SIZE));
+			return new Point((int) (realPos.x / Block.BLOCK_SIZE),
+				(int) (realPos.y / Block.BLOCK_SIZE));
 		}
 
 		public Block GetBlock(Vector2 realPos)
 		{
 			Point logicPos = GetLogicPosition(realPos);
-			if (logicPos.x >= 0 && logicPos.x < LOGIC_HEIGHT &&
-			    logicPos.y >= 0 && logicPos.y < LOGIC_WIDTH)
+			if (logicPos.x >= 0 && logicPos.x < LOGIC_WIDTH &&
+			    logicPos.y >= 0 && logicPos.y < LOGIC_HEIGHT)
 			{
-				return m_Map[logicPos.x][logicPos.y];
+				return m_Map[logicPos.y][logicPos.x];
 			}
 			return null;
 		}
 		
 		private void CurrentGroupOnBlockGroupStop(Point collisionPoint)
 		{
-			Block upBlock = CurrentGroup.UpBlock;
-			Block downBlock = CurrentGroup.DownBlock;
+			StopBlock(CurrentGroup.UpBlock, new Point(collisionPoint.x, collisionPoint.y + 2));
+			StopBlock(CurrentGroup.DownBlock, new Point(collisionPoint.x, collisionPoint.y + 1));
 			
-			upBlock.transform.SetParent(MapTransform);
-			SetMap(collisionPoint.x + 2, collisionPoint.y, upBlock);
-			upBlock.PlayAnimation(Block.EAnimationType.Fall);
-			
-			downBlock.transform.SetParent(MapTransform);
-//			downBlock.LogicPosition = new Point(collisionPoint.x, collisionPoint.y + 1);
-			SetMap(collisionPoint.x + 1, collisionPoint.y, downBlock);
-			downBlock.PlayAnimation(Block.EAnimationType.Fall);
-			
+			// 切换下一组方块
 			SwitchBlockGroup();
 		}
 
+		private void StopBlock(Block block, Point finalPoint)
+		{
+			block.transform.SetParent(MapTransform);
+			SetMap(finalPoint.x, finalPoint.y, block);
+			block.PlayAnimation(Block.EAnimationType.Fall);
+			
+			m_CheckClearQueue.Enqueue(block);
+		}
 	}
 }
