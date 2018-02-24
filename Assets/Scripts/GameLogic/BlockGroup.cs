@@ -10,7 +10,8 @@ namespace Pomutto
 		public float DownSpeed = -50f;
 		public Ease EaseType;
 		public float HorizontalDuration = 0.4f;
-		
+
+		public GameLogicController Controller;
 		public Block UpBlock;
 		public Block DownBlock;
 		
@@ -37,14 +38,12 @@ namespace Pomutto
 				downSpeed *= 8;
 			}
 
-//			Vector3 pos = Vector3.zero;
-//			pos = UpBlock.transform.localPosition;
-//			UpBlock.transform.localPosition = new Vector3(pos.x, pos.y + downSpeed);
-//			pos = DownBlock.transform.localPosition;
-//			DownBlock.transform.localPosition = new Vector3(pos.x, pos.y + downSpeed);
-
 			Vector3 pos = transform.localPosition;
-			transform.localPosition = new Vector3(pos.x, pos.y + downSpeed);
+			Vector2 testPos = new Vector2(pos.x, pos.y + downSpeed);
+			if (Controller.GetBlock(testPos) == null)
+			{
+				transform.localPosition = testPos;
+			}
 		}
 
 		private void CheckHorizontalMove()
@@ -55,11 +54,11 @@ namespace Pomutto
 			}
 
 			int factor = 0;
-			if (InputManager.Instance.LeftPress)
+			if (InputManager.Instance.LeftPress && CanHorizontalMove(true))
 			{
 				factor = -1;
 			}
-			else if (InputManager.Instance.RightPress)
+			else if (InputManager.Instance.RightPress && CanHorizontalMove(false))
 			{
 				factor = 1;
 			}
@@ -71,6 +70,38 @@ namespace Pomutto
 					.SetEase(EaseType)
 				    .OnComplete(OnTweenCompleted);
 			}
+		}
+
+		private bool CanHorizontalMove(bool isLeftMove)
+		{
+			float currentX = transform.localPosition.x;
+			if (isLeftMove)
+			{
+				if (currentX - Block.HALF_BLOCK_SIZE < 0)
+				{
+					return false;
+				}
+				Vector3 pos = transform.localPosition;
+				Vector2 testPos = new Vector2(pos.x - Block.BLOCK_SIZE, pos.y - Block.BLOCK_SIZE);
+				if (Controller.GetBlock(testPos) != null)
+				{
+					return false;
+				}
+			}
+			else
+			{
+				if (currentX + Block.HALF_BLOCK_SIZE > GameLogicController.MAP_WIDTH)
+				{
+					return false;
+				}
+				Vector3 pos = transform.localPosition;
+				Vector2 testPos = new Vector2(pos.x + Block.BLOCK_SIZE, pos.y - Block.BLOCK_SIZE);
+				if (Controller.GetBlock(testPos) != null)
+				{
+					return false;
+				}
+			}
+			return true;
 		}
 		
 		private void OnTweenCompleted()

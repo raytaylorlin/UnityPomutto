@@ -27,7 +27,7 @@ namespace Pomutto
         
         private EType m_Type;
         private SpriteRenderer m_Renderer;
-        private Vector2 m_LogicPosition;
+        private Point m_LogicPosition;
         
         private static Vector4 RED_HSL = new Vector4(0.35f, 0, 0, 0);
         private static Vector4 BLUE_HSL = new Vector4(0, 0, 0, 0);
@@ -39,10 +39,11 @@ namespace Pomutto
             RED_HSL, BLUE_HSL, GREEN_HSL, YELLOW_HSL
         };
 
-        public static int BLOCK_SIZE = 40;
+        public const int BLOCK_SIZE = 40;
+        public const int HALF_BLOCK_SIZE = BLOCK_SIZE / 2;
         
         
-        public Vector2 LogicPosition
+        public Point LogicPosition
         {
             get { return m_LogicPosition; }
             set
