@@ -8,9 +8,6 @@ namespace Pomutto
 {
 	public class BlockGroup : MonoBehaviour
 	{
-		public delegate void BlockGroupStopDelegate(Point collisionPoint);
-		public event BlockGroupStopDelegate OnBlockGroupStop;
-		
 		public float DownSpeed = -50f;
 		public Ease EaseType;
 		public float TweenDuration = 0.4f;
@@ -18,7 +15,7 @@ namespace Pomutto
 		public GameLogicController Controller;
 		public Block UpBlock;
 		public Block DownBlock;
-		
+
 		private Tweener m_Tweener;
 
 		public BlockGroup(Block up, Block down)
@@ -49,11 +46,9 @@ namespace Pomutto
 			Block testBlock = Controller.GetBlock(testPos);
 			if (testPoint.y == -1 || testBlock != null)
 			{
-				if (OnBlockGroupStop != null)
-				{
-					Debug.Log("OnBlcokGroupStop " + testPoint);
-					OnBlockGroupStop(testPoint);
-				}
+				Controller.StopBlock(UpBlock, new Point(testPoint.x, testPoint.y + 2));
+				Controller.StopBlock(DownBlock, new Point(testPoint.x, testPoint.y + 1));
+				Controller.SendFSMEvent(Events.FSMEvent.StopBlock);
 			}
 			else
 			{

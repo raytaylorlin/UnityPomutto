@@ -24,14 +24,13 @@ namespace Pomutto
 		}
 	}
 	
-	public class GameLogicController : MonoBehaviour
+	public partial class GameLogicController : MonoBehaviour
 	{
 		public GameObject BlockPrefab;
 		public Transform MapTransform;
 		public BlockGroup CurrentGroup;
 		public BlockGroup NextGroup;
-		
-		
+
 		public const int LOGIC_WIDTH = 7;
 		public const int LOGIC_REAL_HEIGHT = 12;
 		public const int LOGIC_EXTEND_HEIGHT = 4;
@@ -43,14 +42,8 @@ namespace Pomutto
 		private HashSet<Block> m_BlockHasChecked = new HashSet<Block>();
 		private List<List<Block>> m_ClearSetList = new List<List<Block>>();
 		private HashSet<Block> m_FastFallBlocks = new HashSet<Block>();
+		private HashSet<Block> m_FadingBlocks = new HashSet<Block>();
 		private Vector3 m_InitGroupPosition;
-		private bool m_IsWaitingClearBlocks = false;
-		
-
-		public List<List<Block>> Map
-		{
-			get { return m_Map; }
-		}
 
 		void Start()
 		{
@@ -58,6 +51,8 @@ namespace Pomutto
 			
 			InitBlocks();
 			InitGroup();
+
+			m_GameLogicFSM = GetComponent<PlayMakerFSM>();
 		}
 
 		private void InitBlocks()
@@ -75,13 +70,15 @@ namespace Pomutto
 
 			for (int j = 0; j < 1; j++)
 			{
-				for (int i = 0; i < LOGIC_WIDTH - 5; i++)
+				for (int i = 0; i < LOGIC_WIDTH - 3; i++)
 				{
 					Block block = BlockPool.Instance.Spawn(BlockPrefab, MapTransform);
 					SetMap(i, j, block);
 				}
 			}
 		}
+
+		#region 工具方法
 
 		private void SetMap(int x, int y, Block block)
 		{
@@ -91,7 +88,7 @@ namespace Pomutto
 			}
 			m_Map[y][x] = block;
 		}
-		
+
 		private void SetMap(Point point, Block block)
 		{
 			SetMap(point.x, point.y, block);
@@ -107,21 +104,19 @@ namespace Pomutto
 			return GetMap(point.x, point.y);
 		}
 
+		#endregion
+
 		private void InitGroup()
 		{
 			m_InitGroupPosition = CurrentGroup.transform.localPosition;
-			Debug.Log(m_InitGroupPosition);
 			CreateBlockGroup(NextGroup);
-			SwitchBlockGroup();
-			
-			CurrentGroup.OnBlockGroupStop += CurrentGroupOnBlockGroupStop;
 		}
 
 		private void CreateBlockGroup(BlockGroup group)
 		{
-			group.UpBlock = BlockPool.Instance.Spawn(BlockPrefab, group.transform);
+			group.UpBlock = BlockPool.Instance.Spawn(BlockPrefab, group.transform, 0);
 			group.UpBlock.LogicPosition = new Point(0, 1);
-			group.DownBlock = BlockPool.Instance.Spawn(BlockPrefab, group.transform);
+			group.DownBlock = BlockPool.Instance.Spawn(BlockPrefab, group.transform, 3);
 			group.DownBlock.LogicPosition = new Point(0, 0);
 		}
 
@@ -139,7 +134,7 @@ namespace Pomutto
 		
 		void Update()
 		{
-			if (!m_IsWaitingClearBlocks)
+			if (m_GameLogicFSM.ActiveStateName == "BlockGroupControl")
 			{
 				InputManager.Instance.Tick();
 				CurrentGroup.Tick();
@@ -164,27 +159,18 @@ namespace Pomutto
 			}
 			return null;
 		}
-		
-		private void CurrentGroupOnBlockGroupStop(Point collisionPoint)
-		{
-			StopBlock(CurrentGroup.UpBlock, new Point(collisionPoint.x, collisionPoint.y + 2));
-			StopBlock(CurrentGroup.DownBlock, new Point(collisionPoint.x, collisionPoint.y + 1));
 
-			CheckClearSquare();
-			// 切换下一组方块
-//			SwitchBlockGroup();
-		}
-
-		private void StopBlock(Block block, Point finalPoint)
+		public void StopBlock(Block block, Point finalPoint)
 		{
 			block.transform.SetParent(MapTransform);
 			SetMap(finalPoint.x, finalPoint.y, block);
 			block.PlayAnimation(Block.EAnimationType.Fall);
-			
+
+			// 添加到检查队列，等待下轮的检测
 			m_CheckClearQueue.Enqueue(block);
 		}
 
-		private void CheckClearSquare()
+		public void CheckClearBlock()
 		{
 			/* 1.查找所有待清除的方块 */
 			// 清空待清除的方块集合列表
@@ -205,11 +191,6 @@ namespace Pomutto
 				if (clearSet.Count >= 3)
 				{
 					m_ClearSetList.Add(clearSet);
-//					Debug.Log("Find clear set");
-//					for (int i = 0; i < clearSet.Count; i++)
-//					{
-//						Debug.Log(clearSet[i].name);
-//					}
 				}
 				// 否则重置搜索过的方块为“未检查”状态
 				else
@@ -220,12 +201,12 @@ namespace Pomutto
 					}
 				}
 			}
-
 			
 			/* 2.清除所有需要清除的方块 */
 			if (m_ClearSetList.Count > 0)
 			{
-				//遍历每个待清除方块集合，并对所有方块清除
+				m_FadingBlocks.Clear();
+				// 遍历每个待清除方块集合，并对所有方块清除
 				for (int i = 0; i < m_ClearSetList.Count; i++)
 				{
 					var set = m_ClearSetList[i];
@@ -233,60 +214,24 @@ namespace Pomutto
 
 					for (int j = 0; j < set.Count; j++)
 					{
-						var block = set[j];
-						var logicPos = block.LogicPosition;
-						block.Fade(BlockFadeCallback);
-						if (GetMap(logicPos) != null)
-						{
-//							this._gameField[logicPos.y][logicPos.x].clear();
-							SetMap(logicPos, null);
-						}
-
+						ClearBlock(set[j]);
 						//对消除的方块数计数
 						clearBlockCount += 1;
 					}
 //					this._gameScore.addScore(100 * count);
 				}
-
-				/* 3.查找空隙并让悬空的方块掉落 */
-				m_FastFallBlocks.Clear();
-				// 一列一列地查找空隙
-				for (int i = 0; i < LOGIC_WIDTH; i++)
-				{
-					int fallY = 0;
-					// 从最底部往上查找
-					for (int j = 0; j < LOGIC_HEIGHT; j++)
-					{
-						var checkBlock = GetMap(i, j);
-						if (checkBlock != null)
-						{
-							var logicPos = checkBlock.LogicPosition;
-							if (logicPos.y > fallY)
-							{
-								m_FastFallBlocks.Add(checkBlock);
-								checkBlock.FastFall(fallY, BlockFastFallCallback);
-								// 掉落的方块需要在逻辑矩阵中修改位置
-								SetMap(logicPos.x, logicPos.y, null);
-								SetMap(logicPos.x, fallY, checkBlock);
-								// 掉落的方块要添加到开放列表，等待下轮的检测
-//								m_CheckClearQueue.Enqueue(checkBlock);
-							}
-
-							fallY += 1;
-						}
-					}
-				}
 			}
-			
-			if (m_FastFallBlocks.Count == 0)
+			else
 			{
-				m_IsWaitingClearBlocks = false;
-				SwitchBlockGroup();
+				SendFSMEvent(Events.FSMEvent.ClearBlocksCompleted);
 			}
-			// TODO 检查游戏结束
-			
 		}
 
+		/// <summary>
+		/// 深度优先搜索相邻的所有同色方块
+		/// </summary>
+		/// <param name="clearSet">同色方块集合</param>
+		/// <param name="checkBlock">待检查的方块</param>
 		private void CheckArround(List<Block> clearSet, Block checkBlock)
 		{
 			Point logicPos = checkBlock.LogicPosition;
@@ -319,28 +264,88 @@ namespace Pomutto
 			}
 		}
 
-		private void BlockFastFallCallback(Block block)
+		/// <summary>
+		/// 执行清除方块逻辑
+		/// </summary>
+		/// <param name="block">待清除的方块</param>
+		private void ClearBlock(Block block)
 		{
-			m_FastFallBlocks.Remove(block);
-			StopBlock(block, block.LogicPosition);
-			if (m_FastFallBlocks.Count == 0)
+			Point logicPos = block.LogicPosition;
+			m_FadingBlocks.Add(block);
+			block.Fade(BlockFadeCallback);
+			if (GetMap(logicPos) != null)
 			{
-				if (m_CheckClearQueue.Count == 0)
-				{
-					m_IsWaitingClearBlocks = false;
-					SwitchBlockGroup();
-				}
-				else
-				{
-					CheckClearSquare();
-				}
+				SetMap(logicPos, null);
 			}
 		}
-		
+
+		/// <summary>
+		/// 方块消失动画完成的回调
+		/// </summary>
+		/// <param name="block">执行动画的方块</param>
 		private void BlockFadeCallback(Block block)
 		{
 			block.Reset();
 			BlockPool.Instance.Despawn(block.gameObject);
+
+			m_FadingBlocks.Remove(block);
+			if (m_FadingBlocks.Count == 0)
+			{
+				SendFSMEvent(Events.FSMEvent.ClearBlocksCompleted);
+			}
+		}
+
+		/// <summary>
+		/// 查找空隙并让悬空的方块掉落
+		/// </summary>
+		public void CheckFallBlock()
+		{
+			m_FastFallBlocks.Clear();
+			// 一列一列地查找空隙
+			for (int i = 0; i < LOGIC_WIDTH; i++)
+			{
+				int fallY = 0;
+				// 从最底部往上查找
+				for (int j = 0; j < LOGIC_HEIGHT; j++)
+				{
+					var checkBlock = GetMap(i, j);
+					if (checkBlock != null)
+					{
+						var logicPos = checkBlock.LogicPosition;
+						if (logicPos.y > fallY)
+						{
+							m_FastFallBlocks.Add(checkBlock);
+							checkBlock.FastFall(fallY, BlockFastFallCallback);
+							// 掉落的方块需要在逻辑矩阵中修改位置
+							SetMap(logicPos.x, logicPos.y, null);
+
+						}
+
+						fallY += 1;
+					}
+				}
+			}
+
+			if (m_FastFallBlocks.Count == 0)
+			{
+				SendFSMEvent(Events.FSMEvent.NoFallBlocks);
+			}
+		}
+
+		/// <summary>
+		/// 方块快速下落动画完成的回调
+		/// </summary>
+		/// <param name="block">执行动画的方块</param>
+		private void BlockFastFallCallback(Block block)
+		{
+			Point finalPoint = GetLogicPosition(block.transform.localPosition);
+			StopBlock(block, finalPoint);
+
+			m_FastFallBlocks.Remove(block);
+			if (m_FastFallBlocks.Count == 0)
+			{
+				SendFSMEvent(Events.FSMEvent.StopBlock);
+			}
 		}
 	}
 }

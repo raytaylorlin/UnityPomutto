@@ -104,8 +104,8 @@ namespace Pomutto
 
         public void FastFall(int logicY, Action<Block> callback)
         {
-            transform.DOLocalMoveY(Block.BLOCK_SIZE * logicY, 1f)
-                .SetEase(Ease.OutSine)
+            transform.DOLocalMoveY(Block.BLOCK_SIZE * logicY, 0.3f)
+                .SetEase(Ease.OutCubic)
                 .OnComplete(delegate
                 {
                     callback(this);
@@ -129,6 +129,7 @@ namespace Pomutto
             if (m_FadeAnimationCompletedCallback != null)
             {
                 m_FadeAnimationCompletedCallback(this);
+                m_FadeAnimationCompletedCallback = null;
             }
         }
     }
