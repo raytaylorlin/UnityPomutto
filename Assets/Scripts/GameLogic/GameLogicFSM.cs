@@ -20,6 +20,12 @@ namespace Pomutto
         }
 
         [PlayMakerFSMMethod]
+        public void OnEnterBlockGroupControlState()
+        {
+            Tick();
+        }
+
+        [PlayMakerFSMMethod]
         public void OnEnterBlockGroupResetState()
         {
             SwitchBlockGroup();

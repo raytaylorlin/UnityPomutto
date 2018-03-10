@@ -68,7 +68,7 @@ namespace Pomutto
 				m_Map.Add(row);
 			}
 
-			for (int j = 0; j < 1; j++)
+			for (int j = 0; j < 7; j++)
 			{
 				for (int i = 0; i < LOGIC_WIDTH - 3; i++)
 				{
@@ -114,25 +114,25 @@ namespace Pomutto
 
 		private void CreateBlockGroup(BlockGroup group)
 		{
-			group.UpBlock = BlockPool.Instance.Spawn(BlockPrefab, group.transform, 0);
-			group.UpBlock.LogicPosition = new Point(0, 1);
-			group.DownBlock = BlockPool.Instance.Spawn(BlockPrefab, group.transform, 3);
-			group.DownBlock.LogicPosition = new Point(0, 0);
+			group.SlaveBlock = BlockPool.Instance.Spawn(BlockPrefab, group.transform, 0);
+			group.SlaveBlock.LogicPosition = new Point(0, 1);
+			group.MasterBlock = BlockPool.Instance.Spawn(BlockPrefab, group.transform, 3);
+			group.MasterBlock.LogicPosition = new Point(0, 0);
 		}
 
 		private void SwitchBlockGroup()
 		{
 			CurrentGroup.transform.localPosition = m_InitGroupPosition;
-			CurrentGroup.UpBlock = NextGroup.UpBlock;
-			CurrentGroup.UpBlock.transform.SetParent(CurrentGroup.transform);
-			CurrentGroup.UpBlock.LogicPosition = new Point(0, 1);
-			CurrentGroup.DownBlock = NextGroup.DownBlock;
-			CurrentGroup.DownBlock.transform.SetParent(CurrentGroup.transform);
-			CurrentGroup.DownBlock.LogicPosition = new Point(0, 0);
+			CurrentGroup.SlaveBlock = NextGroup.SlaveBlock;
+			CurrentGroup.SlaveBlock.transform.SetParent(CurrentGroup.transform);
+			CurrentGroup.SlaveBlock.LogicPosition = new Point(0, 1);
+			CurrentGroup.MasterBlock = NextGroup.MasterBlock;
+			CurrentGroup.MasterBlock.transform.SetParent(CurrentGroup.transform);
+			CurrentGroup.MasterBlock.LogicPosition = new Point(0, 0);
 			CreateBlockGroup(NextGroup);
 		}
 		
-		void Update()
+		public void Tick()
 		{
 			if (m_GameLogicFSM.ActiveStateName == "BlockGroupControl")
 			{
@@ -141,7 +141,7 @@ namespace Pomutto
 			}
 		}
 
-		public Point GetLogicPosition(Vector2 realPos)
+		public Point  GetLogicPosition(Vector2 realPos)
 		{
 			realPos.x -= realPos.x < 0 ? Block.BLOCK_SIZE : 0;
 			realPos.y -= realPos.y < 0 ? Block.BLOCK_SIZE : 0;
