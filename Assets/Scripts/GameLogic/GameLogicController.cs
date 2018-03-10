@@ -7,10 +7,16 @@ using UnityEngine;
 
 namespace Pomutto
 {
-	public struct Point
+	public class Point
 	{
 		public int x;
 		public int y;
+
+		public Point()
+		{
+			x = 0;
+			y = 0;
+		}
 
 		public Point(int _x, int _y)
 		{
@@ -129,6 +135,7 @@ namespace Pomutto
 			CurrentGroup.MasterBlock = NextGroup.MasterBlock;
 			CurrentGroup.MasterBlock.transform.SetParent(CurrentGroup.transform);
 			CurrentGroup.MasterBlock.LogicPosition = new Point(0, 0);
+			CurrentGroup.RotateType = BlockGroup.ERotateType.Up;
 			CreateBlockGroup(NextGroup);
 		}
 		
@@ -160,14 +167,16 @@ namespace Pomutto
 			return null;
 		}
 
-		public void StopBlock(Block block, Point finalPoint)
+		public void StopBlock(Block block, Point finalPoint, bool realStop = true)
 		{
 			block.transform.SetParent(MapTransform);
 			SetMap(finalPoint.x, finalPoint.y, block);
-			block.PlayAnimation(Block.EAnimationType.Fall);
-
-			// 添加到检查队列，等待下轮的检测
-			m_CheckClearQueue.Enqueue(block);
+			if (realStop)
+			{
+				block.PlayAnimation(Block.EAnimationType.Fall);
+				// 添加到检查队列，等待下轮的检测
+				m_CheckClearQueue.Enqueue(block);
+			}
 		}
 
 		public void CheckClearBlock()
@@ -344,7 +353,7 @@ namespace Pomutto
 			m_FastFallBlocks.Remove(block);
 			if (m_FastFallBlocks.Count == 0)
 			{
-				SendFSMEvent(Events.FSMEvent.StopBlock);
+				SendFSMEvent(Events.FSMEvent.StopFallBlock);
 			}
 		}
 	}
