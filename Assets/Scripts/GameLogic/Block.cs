@@ -35,20 +35,21 @@ namespace Pomutto
         
         private EType m_Type;
         private SpriteRenderer m_Renderer;
+        private Tweener m_MaterialTweener;
         private Animator m_Animator;
         private Point m_LogicPosition;
         private static bool m_InitConfig = false;
         private static Dictionary<EAnimationType, string> m_AnimationMap = new Dictionary<EAnimationType, string>();
         private Action<Block> m_FadeAnimationCompletedCallback;
         
-        private static Vector4 RED_HSL = new Vector4(0.35f, 0, 0, 1);
-        private static Vector4 BLUE_HSL = new Vector4(0, 0, 0, 1);
-        private static Vector4 GREEN_HSL = new Vector4(0.7f, 0, 0, 1);
-        private static Vector4 YELLOW_HSL = new Vector4(0.5f, 0, 0, 1);
+        private static float RED_HUE = 0.35f;
+        private static float BLUE_HUE = 0;
+        private static float GREEN_HUE = 0.7f;
+        private static float YELLOW_HUE = 0.5f;
 
-        private static Vector4[] HSL_MAP =
+        private static float[] HSL_MAP =
         {
-            RED_HSL, BLUE_HSL, GREEN_HSL, YELLOW_HSL
+            RED_HUE, BLUE_HUE, GREEN_HUE, YELLOW_HUE
         };
 
         public const int BLOCK_SIZE = 40;
@@ -99,7 +100,23 @@ namespace Pomutto
                 m_Renderer = GetComponent<SpriteRenderer>();
             }
             m_Renderer.material.SetFloat("_Alpha", 1);
-            m_Renderer.material.SetVector("_HSLAAdjust", HSL_MAP[(int) type]);
+            m_Renderer.material.SetFloat("_Hue", HSL_MAP[(int) type]);
+        }
+
+        public void Blink()
+        {
+            m_MaterialTweener = m_Renderer.material.DOFloat(0.1f, "_Lightness", 0.2f)
+                .SetLoops(-1, LoopType.Yoyo);
+        }
+
+        public void Stop()
+        {
+            if (m_MaterialTweener != null)
+            {
+                m_Renderer.material.SetFloat("_Lightness", 0);
+                m_MaterialTweener.Pause();
+                m_MaterialTweener = null;
+            }
         }
 
         public void FastFall(int logicY, Action<Block> callback)

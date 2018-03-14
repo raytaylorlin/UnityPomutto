@@ -136,6 +136,8 @@ namespace Pomutto
 			CurrentGroup.MasterBlock.transform.SetParent(CurrentGroup.transform);
 			CurrentGroup.MasterBlock.LogicPosition = new Point(0, 0);
 			CurrentGroup.RotateType = BlockGroup.ERotateType.Up;
+
+			CurrentGroup.MasterBlock.Blink();
 			CreateBlockGroup(NextGroup);
 		}
 		
@@ -148,7 +150,7 @@ namespace Pomutto
 			}
 		}
 
-		public Point  GetLogicPosition(Vector2 realPos)
+		public Point GetLogicPosition(Vector2 realPos)
 		{
 			realPos.x -= realPos.x < 0 ? Block.BLOCK_SIZE : 0;
 			realPos.y -= realPos.y < 0 ? Block.BLOCK_SIZE : 0;
@@ -169,6 +171,7 @@ namespace Pomutto
 
 		public void StopBlock(Block block, Point finalPoint, bool realStop = true)
 		{
+			block.Stop();
 			block.transform.SetParent(MapTransform);
 			SetMap(finalPoint.x, finalPoint.y, block);
 			if (realStop)

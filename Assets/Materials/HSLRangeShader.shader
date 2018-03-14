@@ -39,8 +39,11 @@ Shader "Custom/HSLRangeShader"
        _MainTex ("Sprite Texture", 2D) = "white" {}
        _HSLRangeMin ("HSL Affect Range Min", Range(0, 1)) = 0
        _HSLRangeMax ("HSL Affect Range Max", Range(0, 1)) = 1
+       _Hue ("Hue", Range(0, 1)) = 0
+       _Saturation ("Saturation", Range(-1, 1)) = 0
+       _Lightness ("Lightness", Range(0, 1)) = 0
        _Alpha ("Alpha", Range(0, 1)) = 1
-       _HSLAAdjust ("HSLA Adjust", Vector) = (0, 0, 0, 1)
+//       _HSLAAdjust ("HSLA Adjust", Vector) = (0, 0, 0, 1)
        _StencilComp ("Stencil Comparison", Float) = 8
        _Stencil ("Stencil ID", Float) = 0
        _StencilOp ("Stencil Operation", Float) = 0
@@ -80,6 +83,9 @@ Shader "Custom/HSLRangeShader"
             sampler2D _MainTex;
             float _HSLRangeMin;
             float _HSLRangeMax;
+            float _Hue;
+            float _Saturation;
+            float _Lightness;
             float _Alpha;
             float4 _HSLAAdjust;
 
@@ -138,7 +144,8 @@ Shader "Custom/HSLRangeShader"
                 float4 color = tex2D (_MainTex, IN.uv_MainTex);
                 float3 hsl = rgb2hsl(color.rgb);
                 float affectMult = step(_HSLRangeMin, hsl.r) * step(hsl.r, _HSLRangeMax);
-                float3 rgb = hsl2rgb(hsl + _HSLAAdjust.xyz * affectMult);
+                float3 hslAdjust = float3(_Hue, _Saturation, _Lightness);
+                float3 rgb = hsl2rgb(hsl + hslAdjust * affectMult);
                 return float4(rgb, color.a * _Alpha);
             }
 

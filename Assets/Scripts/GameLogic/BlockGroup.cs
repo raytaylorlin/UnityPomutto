@@ -13,6 +13,14 @@ namespace Pomutto
 			Up, Right, Down, Left
 		}
 
+		private class RotateTweenParam
+		{
+			public int x;
+			public int y;
+			public Ease xEase;
+			public Ease yEase;
+		}
+
 		public float DownSpeed = -50f;
 		public float TweenDuration = 0.4f;
 
@@ -259,73 +267,185 @@ namespace Pomutto
 				return;
 			}
 
+			bool canRotate = false;
 			float currentX = transform.localPosition.x;
+			RotateTweenParam slaveParam = null;
+			RotateTweenParam masterParam = null;
 			// 贴左边界，从下往左旋转的情况
-			if (currentX - Block.HALF_BLOCK_SIZE < 0 &&
-				RotateType == ERotateType.Down)
+			switch (RotateType)
 			{
-				m_Tweener = SlaveBlock.transform.DOLocalMoveY(Block.BLOCK_SIZE, TweenDuration)
-					.SetRelative(true)
-					.SetEase(Ease.OutQuad)
-					.OnComplete(OnTweenCompleted);
-				MasterBlock.transform.DOLocalMoveX(Block.BLOCK_SIZE, TweenDuration)
-					.SetRelative(true)
-					.SetEase(Ease.OutQuad);
+				case ERotateType.Up:
+					if (CanHorizontalMove(false))
+					{
+						slaveParam = new RotateTweenParam()
+						{
+							x = 1,
+							y = -1,
+							xEase = OUT_EASE_TYPE,
+							yEase = IN_EASE_TYPE
+						};
+					}
+					else if (CanHorizontalMove(true))
+					{
+						slaveParam = new RotateTweenParam()
+						{
+							x = 0,
+							y = -1,
+							yEase = OUT_EASE_TYPE
+						};
+						masterParam = new RotateTweenParam()
+						{
+							x = -1,
+							y = 0,
+							xEase = OUT_EASE_TYPE
+						};
+					}
+
+					break;
+				case ERotateType.Right:
+					slaveParam = new RotateTweenParam()
+					{
+						x = -1,
+						y = -1,
+						xEase = IN_EASE_TYPE,
+						yEase = OUT_EASE_TYPE
+					};
+					break;
+				case ERotateType.Down:
+					if (CanHorizontalMove(true))
+					{
+						slaveParam = new RotateTweenParam()
+						{
+							x = -1,
+							y = 1,
+							xEase = OUT_EASE_TYPE,
+							yEase = IN_EASE_TYPE
+						};
+					}
+					else if (CanHorizontalMove(false))
+					{
+						slaveParam = new RotateTweenParam()
+						{
+							x = 0,
+							y = 1,
+							yEase = OUT_EASE_TYPE
+						};
+						masterParam = new RotateTweenParam()
+						{
+							x = 1,
+							y = 0,
+							xEase = OUT_EASE_TYPE
+						};
+					}
+
+					break;
+				case ERotateType.Left:
+					slaveParam = new RotateTweenParam()
+					{
+						x = 1,
+						y = 1,
+						xEase = IN_EASE_TYPE,
+						yEase = OUT_EASE_TYPE
+					};
+					break;
+			}
+
+			if (slaveParam != null)
+			{
+				m_Tweener = DoBlockTween(SlaveBlock, slaveParam);
+			}
+			if (masterParam != null)
+			{
+				m_Tweener = DoBlockTween(MasterBlock, masterParam);
+			}
+
+			if (m_Tweener != null)
+			{
+				m_Tweener.OnComplete(OnRotateTweenCompleted);
+			}
+
+					//				var upPos = GetMapPosition(UpBlock);
+//				Vector2 testPos = new Vector2(upPos.x - Block.BLOCK_SIZE, blockPos.y);
+//				m_Tweener = SlaveBlock.transform.DOLocalMoveY(Block.BLOCK_SIZE, TweenDuration)
+//					.SetRelative(true)
+//					.SetEase(Ease.OutQuad)
+//					.OnComplete(OnTweenCompleted);
+//				MasterBlock.transform.DOLocalMoveX(Block.BLOCK_SIZE, TweenDuration)
+//					.SetRelative(true)
+//					.SetEase(Ease.OutQuad);
 			}
 			// 贴右边界，从上往右旋转的情况
-			else if (currentX + Block.HALF_BLOCK_SIZE > GameLogicController.MAP_WIDTH &&
-					 RotateType == ERotateType.Up)
+//			if (currentX + Block.HALF_BLOCK_SIZE > GameLogicController.MAP_WIDTH &&
+//					 RotateType == ERotateType.Up)
+//			{
+//				m_Tweener = SlaveBlock.transform.DOLocalMoveY(-Block.BLOCK_SIZE, TweenDuration)
+//					.SetRelative(true)
+//					.SetEase(Ease.OutQuad)
+//					.OnComplete(OnTweenCompleted);
+//				MasterBlock.transform.DOLocalMoveX(-Block.BLOCK_SIZE, TweenDuration)
+//					.SetRelative(true)
+//					.SetEase(Ease.OutQuad);
+//			}
+//			else
+//			{
+//				int xFactor = 1;
+//				int yFactor = 1;
+//				Ease xEase = OUT_EASE_TYPE;
+//				Ease yEase = OUT_EASE_TYPE;
+//				switch (RotateType)
+//				{
+//					case ERotateType.Up:
+//						xFactor = 1;
+//						yFactor = -1;
+//						xEase = OUT_EASE_TYPE;
+//						yEase = IN_EASE_TYPE;
+//						break;
+//					case ERotateType.Right:
+//						xFactor = -1;
+//						yFactor = -1;
+//						xEase = IN_EASE_TYPE;
+//						yEase = OUT_EASE_TYPE;
+//						break;
+//					case ERotateType.Down:
+//						xFactor = -1;
+//						yFactor = 1;
+//						xEase = OUT_EASE_TYPE;
+//						yEase = IN_EASE_TYPE;
+//						break;
+//					case ERotateType.Left:
+//						xFactor = 1;
+//						yFactor = 1;
+//						xEase = IN_EASE_TYPE;
+//						yEase = OUT_EASE_TYPE;
+//						break;
+//				}
+//				// 从方块做一个圆弧轨迹旋转
+//				m_Tweener = SlaveBlock.transform.DOLocalMoveX(Block.BLOCK_SIZE * xFactor, TweenDuration)
+//					.SetRelative(true)
+//					.SetEase(xEase)
+//					.OnComplete(OnRotateTweenCompleted);
+//				SlaveBlock.transform.DOLocalMoveY(Block.BLOCK_SIZE * yFactor, TweenDuration)
+//					.SetRelative(true)
+//					.SetEase(yEase);
+//			}
+
+
+		private Tweener DoBlockTween(Block block, RotateTweenParam param)
+		{
+			Debug.Log(string.Format("{0}: x = {1}, xEase = {2}, y = {3}, yEase = {4}",
+				block, param.x, param.xEase, param.y, param.yEase));
+			Tweener tweener = null;
+			if (param.x != 0)
 			{
-				m_Tweener = SlaveBlock.transform.DOLocalMoveY(-Block.BLOCK_SIZE, TweenDuration)
-					.SetRelative(true)
-					.SetEase(Ease.OutQuad)
-					.OnComplete(OnTweenCompleted);
-				MasterBlock.transform.DOLocalMoveX(-Block.BLOCK_SIZE, TweenDuration)
-					.SetRelative(true)
-					.SetEase(Ease.OutQuad);
+				tweener = block.transform.DOLocalMoveX(Block.BLOCK_SIZE * param.x, TweenDuration)
+					.SetRelative(true).SetEase(param.xEase);
 			}
-			else
+			if (param.y != 0)
 			{
-				int xFactor = 1;
-				int yFactor = 1;
-				Ease xEase = OUT_EASE_TYPE;
-				Ease yEase = OUT_EASE_TYPE;
-				switch (RotateType)
-				{
-					case ERotateType.Up:
-						xFactor = 1;
-						yFactor = -1;
-						xEase = OUT_EASE_TYPE;
-						yEase = IN_EASE_TYPE;
-						break;
-					case ERotateType.Right:
-						xFactor = -1;
-						yFactor = -1;
-						xEase = IN_EASE_TYPE;
-						yEase = OUT_EASE_TYPE;
-						break;
-					case ERotateType.Down:
-						xFactor = -1;
-						yFactor = 1;
-						xEase = OUT_EASE_TYPE;
-						yEase = IN_EASE_TYPE;
-						break;
-					case ERotateType.Left:
-						xFactor = 1;
-						yFactor = 1;
-						xEase = IN_EASE_TYPE;
-						yEase = OUT_EASE_TYPE;
-						break;
-				}
-				// 从方块做一个圆弧轨迹旋转
-				m_Tweener = SlaveBlock.transform.DOLocalMoveX(Block.BLOCK_SIZE * xFactor, TweenDuration)
-					.SetRelative(true)
-					.SetEase(xEase)
-					.OnComplete(OnRotateTweenCompleted);
-				SlaveBlock.transform.DOLocalMoveY(Block.BLOCK_SIZE * yFactor, TweenDuration)
-					.SetRelative(true)
-					.SetEase(yEase);
+				tweener = block.transform.DOLocalMoveY(Block.BLOCK_SIZE * param.y, TweenDuration)
+					.SetRelative(true).SetEase(param.yEase);
 			}
+			return tweener;
 		}
 
 		private void OnRotateTweenCompleted()
