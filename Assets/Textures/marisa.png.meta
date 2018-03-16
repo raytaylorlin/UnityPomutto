@@ -1,0 +1,1360 @@
+fileFormatVersion: 2
+guid: 129f0fac3f7a2ef498150420b9683a60
+timeCreated: 1521221182
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: idle_0
+    21300002: idle_1
+    21300004: idle_2
+    21300006: idle_3
+    21300008: idle_4
+    21300010: idle_5
+    21300012: idle_6
+    21300014: idle_7
+    21300016: idle_8
+    21300018: idle_9
+    21300020: attack1_0
+    21300022: attack1_1
+    21300024: attack1_2
+    21300026: attack1_3
+    21300028: attack1_4
+    21300030: attack1_5
+    21300032: attack1_6
+    21300034: attack1_7
+    21300036: attack1_8
+    21300038: attack1_9
+    21300040: attack2_0
+    21300042: attack2_1
+    21300044: attack2_2
+    21300046: attack2_3
+    21300048: attack2_4
+    21300050: attack2_5
+    21300052: attack2_6
+    21300054: attack2_7
+    21300056: attack2_8
+    21300058: attack2_9
+    21300060: attack2_10
+    21300062: attack2_11
+    21300064: attack2_12
+    21300066: attack2_13
+    21300068: hit_0
+    21300070: hit_1
+    21300072: hit_2
+    21300074: down_0
+    21300076: down_1
+    21300078: down_2
+    21300080: down_3
+    21300082: down_4
+    21300084: down_5
+    21300086: down_6
+    21300088: useitem_0
+    21300090: useitem_1
+    21300092: useitem_2
+    21300094: useitem_3
+    21300096: useitem_4
+    21300098: useitem_5
+    21300100: useitem_6
+    21300102: useitem_7
+    21300104: useitem_8
+    21300106: useitem_9
+    21300108: spell1_0
+    21300110: spell1_1
+    21300112: spell1_2
+    21300114: spell1_3
+    21300116: spell1_4
+    21300118: spell1_5
+    21300120: spell1_6
+    21300122: spell1_7
+    21300124: spell1_8
+    21300126: spell1_9
+    21300128: spell1_10
+    21300130: spell1_11
+    21300132: spell1_12
+    21300134: spell1_13
+    21300136: spell1_14
+    21300138: spell1_15
+    21300140: spell1_16
+    21300142: spell1_17
+    21300144: spell1_18
+    21300146: spell1_19
+    21300148: spell1_20
+    21300150: spell1_21
+    21300152: spell1_22
+    21300154: spell1_23
+    21300156: spell2_0
+    21300158: spell2_1
+    21300160: spell2_2
+    21300162: spell2_3
+    21300164: spell2_4
+    21300166: spell2_5
+    21300168: spell2_6
+    21300170: spell2_7
+    21300172: spell2_8
+    21300174: spell2_9
+    21300176: spell2_10
+    21300178: spell2_11
+    21300180: spell2_12
+    21300182: spell2_13
+    21300184: spell2_14
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: idle_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 924
+        width: 55
+        height: 99
+      alignment: 9
+      pivot: {x: 0.56334543, y: 0.06415843}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: idle_1
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 924
+        width: 55
+        height: 98
+      alignment: 9
+      pivot: {x: 0.5682183, y: 0.06791594}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: idle_2
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 924
+        width: 55
+        height: 97
+      alignment: 9
+      pivot: {x: 0.5633456, y: 0.07174966}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: idle_3
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 924
+        width: 55
+        height: 97
+      alignment: 9
+      pivot: {x: 0.5633456, y: 0.07174966}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: idle_4
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 924
+        width: 55
+        height: 97
+      alignment: 9
+      pivot: {x: 0.5633456, y: 0.07174966}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: idle_5
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 924
+        width: 55
+        height: 98
+      alignment: 9
+      pivot: {x: 0.57309073, y: 0.062445816}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: idle_6
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 924
+        width: 55
+        height: 99
+      alignment: 9
+      pivot: {x: 0.57309127, y: 0.06415843}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: idle_7
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 924
+        width: 55
+        height: 99
+      alignment: 9
+      pivot: {x: 0.57309127, y: 0.061451305}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: idle_8
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 924
+        width: 54
+        height: 100
+      alignment: 9
+      pivot: {x: 0.5843709, y: 0.060477294}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: idle_9
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 924
+        width: 54
+        height: 100
+      alignment: 9
+      pivot: {x: 0.57444483, y: 0.052437134}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack1_0
+      rect:
+        serializedVersion: 2
+        x: 662
+        y: 923
+        width: 61
+        height: 100
+      alignment: 9
+      pivot: {x: 0.654508, y: 0.023699341}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack1_1
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 923
+        width: 87
+        height: 99
+      alignment: 9
+      pivot: {x: 0.47309893, y: 0.033955276}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack1_2
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 923
+        width: 87
+        height: 100
+      alignment: 9
+      pivot: {x: 0.51921415, y: 0.018555298}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack1_3
+      rect:
+        serializedVersion: 2
+        x: 915
+        y: 923
+        width: 65
+        height: 101
+      alignment: 9
+      pivot: {x: 0.47428167, y: 0.029942881}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack1_4
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 819
+        width: 167
+        height: 96
+      alignment: 9
+      pivot: {x: 0.20504113, y: 0.055091858}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack1_5
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 819
+        width: 154
+        height: 93
+      alignment: 9
+      pivot: {x: 0.19431295, y: 0.023978285}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack1_6
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 819
+        width: 147
+        height: 99
+      alignment: 9
+      pivot: {x: 0.22853515, y: 0.03078453}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack1_7
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 819
+        width: 102
+        height: 96
+      alignment: 9
+      pivot: {x: 0.32272458, y: 0.025864283}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack1_8
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 819
+        width: 76
+        height: 99
+      alignment: 9
+      pivot: {x: 0.45487654, y: 0.03078453}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack1_9
+      rect:
+        serializedVersion: 2
+        x: 682
+        y: 819
+        width: 54
+        height: 98
+      alignment: 9
+      pivot: {x: 0.7078394, y: 0.0387212}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack2_0
+      rect:
+        serializedVersion: 2
+        x: 813
+        y: 818
+        width: 53
+        height: 99
+      alignment: 9
+      pivot: {x: 0.72020334, y: 0.0436648}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack2_1
+      rect:
+        serializedVersion: 2
+        x: 872
+        y: 818
+        width: 67
+        height: 95
+      alignment: 9
+      pivot: {x: 0.75285774, y: 0.044265267}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack2_2
+      rect:
+        serializedVersion: 2
+        x: 945
+        y: 818
+        width: 63
+        height: 90
+      alignment: 9
+      pivot: {x: 0.6673235, y: 0.03567844}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack2_3
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 692
+        width: 84
+        height: 94
+      alignment: 9
+      pivot: {x: 0.70933217, y: 0.01472116}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack2_4
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 689
+        width: 130
+        height: 122
+      alignment: 9
+      pivot: {x: 0.45099252, y: 0.009121754}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack2_5
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 689
+        width: 112
+        height: 105
+      alignment: 9
+      pivot: {x: 0.16324846, y: 0.10681966}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack2_6
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 689
+        width: 110
+        height: 102
+      alignment: 9
+      pivot: {x: 0.15480901, y: 0.14772244}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack2_7
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 689
+        width: 117
+        height: 97
+      alignment: 9
+      pivot: {x: 0.2669422, y: 0.16897175}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack2_8
+      rect:
+        serializedVersion: 2
+        x: 582
+        y: 689
+        width: 107
+        height: 84
+      alignment: 9
+      pivot: {x: 0.34519088, y: 0.17234948}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack2_9
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 703
+        width: 77
+        height: 66
+      alignment: 9
+      pivot: {x: 0.47352263, y: 0.06754557}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack2_10
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 703
+        width: 64
+        height: 84
+      alignment: 9
+      pivot: {x: 0.4615326, y: 0.049381074}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack2_11
+      rect:
+        serializedVersion: 2
+        x: 853
+        y: 703
+        width: 50
+        height: 85
+      alignment: 9
+      pivot: {x: 0.70926267, y: 0.04382109}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack2_12
+      rect:
+        serializedVersion: 2
+        x: 909
+        y: 703
+        width: 53
+        height: 97
+      alignment: 9
+      pivot: {x: 0.81354564, y: 0.03997677}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: attack2_13
+      rect:
+        serializedVersion: 2
+        x: 968
+        y: 703
+        width: 55
+        height: 98
+      alignment: 9
+      pivot: {x: 0.82452506, y: 0.03839049}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: hit_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 585
+        width: 66
+        height: 98
+      alignment: 9
+      pivot: {x: 0.5634664, y: 0.01817166}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: hit_1
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 585
+        width: 66
+        height: 103
+      alignment: 9
+      pivot: {x: 0.5461575, y: 0.02307603}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: hit_2
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 585
+        width: 57
+        height: 104
+      alignment: 9
+      pivot: {x: 0.4732773, y: 0.024000315}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: down_0
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 589
+        width: 70
+        height: 68
+      alignment: 9
+      pivot: {x: 0.31020072, y: 0.06191119}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: down_1
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 588
+        width: 63
+        height: 61
+      alignment: 9
+      pivot: {x: 0.3623788, y: 0.06272313}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: down_2
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 588
+        width: 76
+        height: 76
+      alignment: 9
+      pivot: {x: 0.56741214, y: 0.023291336}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: down_3
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 588
+        width: 110
+        height: 48
+      alignment: 9
+      pivot: {x: 0.83408594, y: 0.46628824}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: down_4
+      rect:
+        serializedVersion: 2
+        x: 618
+        y: 588
+        width: 97
+        height: 40
+      alignment: 9
+      pivot: {x: 0.7848712, y: 0.63621676}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: down_5
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 588
+        width: 92
+        height: 41
+      alignment: 9
+      pivot: {x: 0.79487014, y: 0.5818377}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: down_6
+      rect:
+        serializedVersion: 2
+        x: 819
+        y: 588
+        width: 92
+        height: 39
+      alignment: 9
+      pivot: {x: 0.8189087, y: 0.5772862}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: useitem_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 475
+        width: 57
+        height: 96
+      alignment: 9
+      pivot: {x: 0.92756474, y: 0.043833733}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: useitem_1
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 475
+        width: 57
+        height: 96
+      alignment: 9
+      pivot: {x: 0.9275645, y: 0.024000486}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: useitem_2
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 475
+        width: 68
+        height: 99
+      alignment: 9
+      pivot: {x: 0.78559965, y: 0.023038922}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: useitem_3
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 475
+        width: 53
+        height: 99
+      alignment: 9
+      pivot: {x: 0.9310939, y: 0.023038922}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: useitem_4
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 475
+        width: 58
+        height: 103
+      alignment: 9
+      pivot: {x: 0.6378758, y: 0.011984816}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: useitem_5
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 475
+        width: 58
+        height: 110
+      alignment: 9
+      pivot: {x: 0.65757227, y: 0.029193114}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: useitem_6
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 475
+        width: 58
+        height: 109
+      alignment: 9
+      pivot: {x: 0.65757227, y: 0.017886661}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: useitem_7
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 475
+        width: 55
+        height: 102
+      alignment: 9
+      pivot: {x: 0.7423268, y: 0.010933969}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: useitem_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 475
+        width: 55
+        height: 99
+      alignment: 9
+      pivot: {x: 0.74925095, y: 0.03842471}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: useitem_9
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 475
+        width: 58
+        height: 110
+      alignment: 9
+      pivot: {x: 0.6772682, y: 0.025731312}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_0
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 348
+        width: 55
+        height: 93
+      alignment: 9
+      pivot: {x: 0.93988764, y: 0.029098019}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_1
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 348
+        width: 55
+        height: 89
+      alignment: 9
+      pivot: {x: 0.9287512, y: 0.032020826}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 348
+        width: 57
+        height: 87
+      alignment: 9
+      pivot: {x: 0.83311486, y: 0.028303124}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_3
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 348
+        width: 52
+        height: 89
+      alignment: 9
+      pivot: {x: 0.929929, y: 0.0801954}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_4
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 348
+        width: 76
+        height: 117
+      alignment: 9
+      pivot: {x: 0.9835538, y: 0.13092823}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_5
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 348
+        width: 61
+        height: 77
+      alignment: 9
+      pivot: {x: 0.98196864, y: 0.19374897}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_6
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 348
+        width: 59
+        height: 77
+      alignment: 9
+      pivot: {x: 0.9931154, y: 0.19772616}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_7
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 348
+        width: 60
+        height: 77
+      alignment: 9
+      pivot: {x: 0.9797933, y: 0.181817}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_8
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 348
+        width: 58
+        height: 77
+      alignment: 9
+      pivot: {x: 0.97521657, y: 0.181817}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_9
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 348
+        width: 57
+        height: 77
+      alignment: 9
+      pivot: {x: 0.97818154, y: 0.18579419}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_10
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 348
+        width: 56
+        height: 77
+      alignment: 9
+      pivot: {x: 0.970314, y: 0.19374897}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_11
+      rect:
+        serializedVersion: 2
+        x: 718
+        y: 348
+        width: 59
+        height: 77
+      alignment: 9
+      pivot: {x: 0.97235316, y: 0.18977177}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_12
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 225
+        width: 77
+        height: 116
+      alignment: 9
+      pivot: {x: 0.98114204, y: 0.14127758}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_13
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 225
+        width: 72
+        height: 117
+      alignment: 9
+      pivot: {x: 0.98845375, y: 0.13516523}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_14
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 225
+        width: 66
+        height: 111
+      alignment: 9
+      pivot: {x: 0.9759119, y: 0.14688618}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_15
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 225
+        width: 62
+        height: 104
+      alignment: 9
+      pivot: {x: 0.9719755, y: 0.14893283}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_16
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 225
+        width: 62
+        height: 99
+      alignment: 9
+      pivot: {x: 0.97630554, y: 0.15289615}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_17
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 225
+        width: 60
+        height: 96
+      alignment: 9
+      pivot: {x: 0.9787592, y: 0.15882795}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_18
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 225
+        width: 61
+        height: 93
+      alignment: 9
+      pivot: {x: 0.97971284, y: 0.1507091}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_19
+      rect:
+        serializedVersion: 2
+        x: 503
+        y: 225
+        width: 58
+        height: 96
+      alignment: 9
+      pivot: {x: 0.9906395, y: 0.09730514}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_20
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 225
+        width: 54
+        height: 97
+      alignment: 9
+      pivot: {x: 0.96732473, y: 0.11252727}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_21
+      rect:
+        serializedVersion: 2
+        x: 627
+        y: 225
+        width: 55
+        height: 101
+      alignment: 9
+      pivot: {x: 0.9148981, y: 0.117240526}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_22
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 225
+        width: 57
+        height: 98
+      alignment: 9
+      pivot: {x: 0.9191787, y: 0.028819805}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell1_23
+      rect:
+        serializedVersion: 2
+        x: 751
+        y: 225
+        width: 56
+        height: 88
+      alignment: 9
+      pivot: {x: 0.94584113, y: 0.030189168}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell2_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 157
+        width: 120
+        height: 56
+      alignment: 9
+      pivot: {x: 0.7024192, y: 0.22063147}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell2_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 157
+        width: 120
+        height: 54
+      alignment: 9
+      pivot: {x: 0.7298659, y: 0.33226973}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell2_2
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 157
+        width: 119
+        height: 50
+      alignment: 9
+      pivot: {x: 0.71795887, y: 0.45883027}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell2_3
+      rect:
+        serializedVersion: 2
+        x: 379
+        y: 157
+        width: 119
+        height: 54
+      alignment: 9
+      pivot: {x: 0.71449906, y: 0.56099194}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell2_4
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 157
+        width: 120
+        height: 57
+      alignment: 9
+      pivot: {x: 0.70585024, y: 0.7094606}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell2_5
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 157
+        width: 118
+        height: 51
+      alignment: 9
+      pivot: {x: 0.7163174, y: 0.58879834}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell2_6
+      rect:
+        serializedVersion: 2
+        x: 754
+        y: 157
+        width: 119
+        height: 51
+      alignment: 9
+      pivot: {x: 0.5968705, y: 0.4273472}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell2_7
+      rect:
+        serializedVersion: 2
+        x: 879
+        y: 157
+        width: 117
+        height: 49
+      alignment: 9
+      pivot: {x: 0.63723314, y: 0.28154707}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell2_8
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 55
+        width: 100
+        height: 91
+      alignment: 9
+      pivot: {x: 0.6339044, y: 0.20570424}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell2_9
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 51
+        width: 102
+        height: 99
+      alignment: 9
+      pivot: {x: 0.67640597, y: 0.34360883}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell2_10
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 51
+        width: 102
+        height: 96
+      alignment: 9
+      pivot: {x: 0.6846107, y: 0.51307654}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell2_11
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 51
+        width: 101
+        height: 98
+      alignment: 9
+      pivot: {x: 0.7030111, y: 0.5896681}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spell2_12
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 51
+        width: 102
+        height: 97
+      alignment: 9
+      pivot: {x: 0.7010208, y: 0.5776505}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
