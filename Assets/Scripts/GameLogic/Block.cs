@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Pomutto.Config;
 
 namespace Pomutto
 {
@@ -24,15 +25,11 @@ namespace Pomutto
             Fade
         }
         
-        public Ease easeType;
-        public float duration;
-        public float offset = 64f;
+        
 
         [Header("Debug")] 
-        
         [ReadOnly] public EType BlockType;
 
-        
         private EType m_Type;
         private SpriteRenderer m_Renderer;
         private Tweener m_MaterialTweener;
@@ -148,6 +145,22 @@ namespace Pomutto
                 m_FadeAnimationCompletedCallback(this);
                 m_FadeAnimationCompletedCallback = null;
             }
+        }
+
+        public void GameOverJump()
+        {
+            var config = ConfigManager.Instance.BlockConfig;
+            Vector3 endValue = new Vector3(
+                transform.localPosition.x + BLOCK_SIZE * RandomRange(config.XRandomMin, config.XRandomMax),
+                transform.localPosition.y - BLOCK_SIZE * (GameLogicController.LOGIC_HEIGHT + RandomRange(config.YRandomMin, config.YRandomMax)));
+            float jumpPower = BLOCK_SIZE * RandomRange(config.JumpRandomMin, config.JumpRandomMax);
+            transform.DOLocalJump(endValue, jumpPower, 1, RandomRange(config.TimeRandomMin, config.TimeRandomMax))
+                .SetEase(config.JumpEase);
+        }
+
+        private float RandomRange(float min, float max)
+        {
+            return UnityEngine.Random.Range(min, max);
         }
     }
 }

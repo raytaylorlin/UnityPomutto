@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Pomutto.Config;
 using UnityEngine;
 
 namespace Pomutto
@@ -21,12 +22,13 @@ namespace Pomutto
 			public Ease yEase;
 		}
 
-		public float DownSpeed = -50f;
-		public float TweenDuration = 0.4f;
 
 		public GameLogicController Controller;
 		public Block SlaveBlock;
 		public Block MasterBlock;
+
+		private float downSpeed;
+		private float tweenDuration;
 
 		private const Ease OUT_EASE_TYPE = Ease.OutQuad;
 		private const Ease IN_EASE_TYPE = Ease.InQuad;
@@ -99,10 +101,10 @@ namespace Pomutto
 			get { return RotateType == ERotateType.Up || RotateType == ERotateType.Down; }
 		}
 
-		public BlockGroup(Block slave, Block master)
+		void Start()
 		{
-			SlaveBlock = slave;
-			MasterBlock = master;
+			downSpeed = ConfigManager.Instance.BlockConfig.BlockGroupDownSpeed;
+			tweenDuration = ConfigManager.Instance.BlockConfig.BlockGroupTweenDuration;
 		}
 
 		public void Tick()
@@ -114,17 +116,17 @@ namespace Pomutto
 
 		private void CheckDownMove()
 		{
-			float downSpeed = DownSpeed * Time.deltaTime;
+			float ds = downSpeed * Time.deltaTime;
 			if (InputManager.Instance.DownPress && m_Tweener == null)
 			{
-				downSpeed *= 8;
+				ds *= 8;
 			}
 
 			if (IsRotateVertical)
 			{
 				Point testPoint;
 				Vector2 downBlockPos = transform.localPosition + DownBlock.transform.localPosition;
-				Vector2 testPos = new Vector2(downBlockPos.x, downBlockPos.y + downSpeed);
+				Vector2 testPos = new Vector2(downBlockPos.x, downBlockPos.y + ds);
 				if (!TestPositionValid(testPos, out testPoint))
 				{
 					Controller.StopBlock(UpBlock, new Point(testPoint.x, testPoint.y + 2));
@@ -133,7 +135,7 @@ namespace Pomutto
 				}
 				else
 				{
-					transform.Translate(0, downSpeed, 0);
+					transform.Translate(0, ds, 0);
 				}
 			}
 			else
@@ -144,7 +146,7 @@ namespace Pomutto
 				Point otherPoint = new Point();
 				var pos = transform.localPosition + MasterBlock.transform.localPosition;
 //				Vector2 test = new Vector2(MasterBlock.transform.localPosition.x, MasterBlock.transform.localPosition.y + downSpeed);
-				Vector2 testPos = new Vector2(pos.x, pos.y + downSpeed);
+				Vector2 testPos = new Vector2(pos.x, pos.y + ds);
 				if (!TestPositionValid(testPos, out testPoint))
 				{
 					Controller.StopBlock(MasterBlock, new Point(testPoint.x, testPoint.y + 1));
@@ -154,7 +156,7 @@ namespace Pomutto
 				}
 
 				pos = transform.localPosition + SlaveBlock.transform.localPosition;
-				testPos = new Vector2(pos.x, pos.y + downSpeed);
+				testPos = new Vector2(pos.x, pos.y + ds);
 				if (!TestPositionValid(testPos, out testPoint))
 				{
 					Controller.StopBlock(SlaveBlock, new Point(testPoint.x, testPoint.y + 1));
@@ -182,7 +184,7 @@ namespace Pomutto
 				}
 				else
 				{
-					transform.Translate(0, downSpeed, 0);
+					transform.Translate(0, ds, 0);
 				}
 			}
 		}
@@ -222,7 +224,7 @@ namespace Pomutto
 			if (factor != 0 && m_Tweener == null)
 			{
 				Debug.Log(string.Format("HorizontalMove: {0}", factor));	
-				m_Tweener = transform.DOLocalMoveX(Block.BLOCK_SIZE * factor, TweenDuration)
+				m_Tweener = transform.DOLocalMoveX(Block.BLOCK_SIZE * factor, tweenDuration)
 					.SetRelative(true)
 					.SetEase(OUT_EASE_TYPE)
 				    .OnComplete(OnTweenCompleted);
@@ -383,12 +385,12 @@ namespace Pomutto
 			Tweener tweener = null;
 			if (param.x != 0)
 			{
-				tweener = block.transform.DOLocalMoveX(Block.BLOCK_SIZE * param.x, TweenDuration)
+				tweener = block.transform.DOLocalMoveX(Block.BLOCK_SIZE * param.x, tweenDuration)
 					.SetRelative(true).SetEase(param.xEase);
 			}
 			if (param.y != 0)
 			{
-				tweener = block.transform.DOLocalMoveY(Block.BLOCK_SIZE * param.y, TweenDuration)
+				tweener = block.transform.DOLocalMoveY(Block.BLOCK_SIZE * param.y, tweenDuration)
 					.SetRelative(true).SetEase(param.yEase);
 			}
 			return tweener;

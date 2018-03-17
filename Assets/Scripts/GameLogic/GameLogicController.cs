@@ -42,6 +42,7 @@ namespace Pomutto
 		public const int LOGIC_EXTEND_HEIGHT = 4;
 		public const int LOGIC_HEIGHT = LOGIC_REAL_HEIGHT + LOGIC_EXTEND_HEIGHT;
 		public const int MAP_WIDTH = Block.BLOCK_SIZE * (LOGIC_WIDTH - 1);
+		public static Point GAMEOVER_POINT = new Point(LOGIC_WIDTH / 2, LOGIC_REAL_HEIGHT - 1);
 
 		private List<List<Block>> m_Map;
 		private Queue<Block> m_CheckClearQueue = new Queue<Block>();
@@ -132,6 +133,18 @@ namespace Pomutto
 			group.MasterBlock.LogicPosition = new Point(0, 0);
 		}
 
+		private void CheckSwitch()
+		{
+			if (GetMap(GAMEOVER_POINT) != null)
+			{
+				SendFSMEvent(Events.FSMEvent.GameOver);
+			}
+			else
+			{
+				SwitchBlockGroup();
+			}
+		}
+
 		private void SwitchBlockGroup()
 		{
 			CurrentGroup.transform.localPosition = m_InitGroupPosition;
@@ -145,6 +158,8 @@ namespace Pomutto
 
 			CurrentGroup.MasterBlock.Blink();
 			CreateBlockGroup(NextGroup);
+			
+			SendFSMEvent(Events.FSMEvent.BlockGroupReset);
 		}
 		
 		public void Tick()
@@ -364,6 +379,20 @@ namespace Pomutto
 			if (m_FastFallBlocks.Count == 0)
 			{
 				SendFSMEvent(Events.FSMEvent.StopFallBlock);
+			}
+		}
+
+		private void OnGameOver()
+		{
+			for (int j = 0; j < m_Map.Count; j++)
+			{
+				for (int i = 0; i < m_Map[j].Count; i++)
+				{
+					if (m_Map[j][i] != null)
+					{
+						m_Map[j][i].GameOverJump();
+					}
+				}
 			}
 		}
 	}

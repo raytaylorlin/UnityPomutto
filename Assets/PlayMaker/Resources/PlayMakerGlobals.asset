@@ -31,5 +31,5 @@ MonoBehaviour:
     - 
     variableCategoryIDs: 
   events:
-  - CLEAR_BLOCKS_COMPLETED
   - GAME_OVER
+  - CLEAR_BLOCKS_COMPLETED

@@ -315,7 +315,7 @@ MonoBehaviour:
         x: 365
         y: 354
         width: 154
-        height: 64
+        height: 48
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
@@ -333,14 +333,6 @@ MonoBehaviour:
           isSystemEvent: 0
           isGlobal: 0
         toState: CheckClearBlocks
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      - fsmEvent:
-          name: GAME_OVER
-          isSystemEvent: 0
-          isGlobal: 1
-        toState: GameOver
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -660,12 +652,14 @@ MonoBehaviour:
       hideUnused: 0
       transitions: []
       actionData:
-        actionNames: []
-        customNames: []
-        actionEnabled: 
-        actionIsOpen: 
-        actionStartIndex: 
-        actionHashCodes: 
+        actionNames:
+        - HutongGames.PlayMaker.Actions.CallMethod
+        customNames:
+        - 
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 35355304
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -675,9 +669,46 @@ MonoBehaviour:
         fsmEventTargetParams: []
         fsmPropertyParams: []
         layoutOptionParams: []
-        fsmStringParams: []
-        fsmObjectParams: []
-        fsmVarParams: []
+        fsmStringParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: OnEnterGameOverState
+        fsmObjectParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: UnityEngine.MonoBehaviour
+          value: {fileID: 333268838}
+        fsmVarParams:
+        - variableName: 
+          objectType: 
+          useVariable: 0
+          type: -1
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
         fsmArrayParams: []
         fsmEnumParams: []
         fsmFloatParams: []
@@ -689,31 +720,45 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 
-        arrayParamSizes: 
-        arrayParamTypes: []
+        byteData: 00
+        arrayParamSizes: 00000000
+        arrayParamTypes:
+        - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 
-        paramName: []
-        paramDataPos: 
-        paramByteDataSize: 
+        paramDataType: 18000000120000000c0000002700000001000000
+        paramName:
+        - behaviour
+        - methodName
+        - parameters
+        - storeResult
+        - everyFrame
+        paramDataPos: 0000000000000000000000000000000000000000
+        paramByteDataSize: 0000000000000000000000000000000001000000
     - name: BlockGroupReset
       description: 
       colorIndex: 1
       position:
         serializedVersion: 2
-        x: 372
-        y: 247
-        width: 133
-        height: 32
+        x: 357
+        y: 252
+        width: 175
+        height: 48
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
+          name: GAME_OVER
+          isSystemEvent: 0
+          isGlobal: 1
+        toState: GameOver
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      - fsmEvent:
+          name: BLOCK_GROUP_RESET
+          isSystemEvent: 0
           isGlobal: 0
         toState: BlockGroupControl
         linkStyle: 0
@@ -807,6 +852,9 @@ MonoBehaviour:
     - name: FINISHED
       isSystemEvent: 1
       isGlobal: 0
+    - name: BLOCK_GROUP_RESET
+      isSystemEvent: 0
+      isGlobal: 0
     - name: CLEAR_BLOCKS_COMPLETED
       isSystemEvent: 0
       isGlobal: 1
@@ -857,7 +905,7 @@ MonoBehaviour:
     locked: 0
     manualUpdate: 0
     keepDelayedEventsOnStateExit: 0
-    preprocessed: 1
+    preprocessed: 0
     ExposedEvents: []
     RestartOnEnable: 1
     EnableDebugFlow: 0
@@ -1185,7 +1233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b665cf6703ea444a06ef5844a97427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DownSpeed: -4
+  DownSpeed: -14
   TweenDuration: 0.2
   Controller: {fileID: 333268838}
   SlaveBlock: {fileID: 0}
@@ -1314,7 +1362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previewOnGUI: 1
   enableGUILayout: 1
-  drawStateLabels: 1
+  drawStateLabels: 0
   GUITextureStateLabels: 1
   GUITextStateLabels: 1
   filterLabelsWithDistance: 0

@@ -28,7 +28,7 @@ namespace Pomutto
         [PlayMakerFSMMethod]
         public void OnEnterBlockGroupResetState()
         {
-            SwitchBlockGroup();
+            CheckSwitch();
         }
 
         [PlayMakerFSMMethod]
@@ -41,6 +41,12 @@ namespace Pomutto
         public void OnEnterWaitFallBlocksState()
         {
             CheckFallBlock();
+        }
+        
+        [PlayMakerFSMMethod]
+        public void OnEnterGameOverState()
+        {
+            OnGameOver();
         }
     }
 }
