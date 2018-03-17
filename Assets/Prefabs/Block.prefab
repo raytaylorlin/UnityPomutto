@@ -71,6 +71,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BlockType: 0
+  XRandomMin: -3
+  XRandomMax: 3
+  YRandomMin: 1
+  YRandomMax: 3
+  JumpRandomMin: 5
+  JumpRandomMax: 8
+  TimeRandomMin: 2
+  TimeRandomMax: 4
+  JumpEase: 1
 --- !u!212 &212088100895421664
 SpriteRenderer:
   m_ObjectHideFlags: 1
