@@ -80,6 +80,10 @@ namespace Pomutto
 				for (int i = 0; i < mapData[j].Count; i++)
 				{
 					var data = mapData[j][i];
+					if (data == -1)
+					{
+						continue;
+					}
 					Block block = BlockPool.Instance.Spawn(BlockPrefab, MapTransform, data);
 					SetMap(i, j, block);
 				}

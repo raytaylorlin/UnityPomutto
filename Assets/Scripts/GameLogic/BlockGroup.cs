@@ -125,7 +125,7 @@ namespace Pomutto
 				Point testPoint;
 				Vector2 downBlockPos = transform.localPosition + DownBlock.transform.localPosition;
 				Vector2 testPos = new Vector2(downBlockPos.x, downBlockPos.y + downSpeed);
-				if (!TestPositionValid(testPos, true, out testPoint))
+				if (!TestPositionValid(testPos, out testPoint))
 				{
 					Controller.StopBlock(UpBlock, new Point(testPoint.x, testPoint.y + 2));
 					Controller.StopBlock(DownBlock, new Point(testPoint.x, testPoint.y + 1));
@@ -145,7 +145,7 @@ namespace Pomutto
 				var pos = transform.localPosition + MasterBlock.transform.localPosition;
 //				Vector2 test = new Vector2(MasterBlock.transform.localPosition.x, MasterBlock.transform.localPosition.y + downSpeed);
 				Vector2 testPos = new Vector2(pos.x, pos.y + downSpeed);
-				if (!TestPositionValid(testPos, true, out testPoint))
+				if (!TestPositionValid(testPos, out testPoint))
 				{
 					Controller.StopBlock(MasterBlock, new Point(testPoint.x, testPoint.y + 1));
 					stopBlockCount += 1;
@@ -155,7 +155,7 @@ namespace Pomutto
 
 				pos = transform.localPosition + SlaveBlock.transform.localPosition;
 				testPos = new Vector2(pos.x, pos.y + downSpeed);
-				if (!TestPositionValid(testPos, true, out testPoint))
+				if (!TestPositionValid(testPos, out testPoint))
 				{
 					Controller.StopBlock(SlaveBlock, new Point(testPoint.x, testPoint.y + 1));
 					stopBlockCount += 1;
@@ -187,26 +187,19 @@ namespace Pomutto
 			}
 		}
 
-		private bool TestPositionValid(Vector2 testPos, bool isVertical, out Point testPoint)
+		private bool TestPositionValid(Vector2 testPos, out Point testPoint)
 		{
 			testPoint = Controller.GetLogicPosition(testPos);
 			Block testBlock = Controller.GetBlock(testPos);
-			if (isVertical)
-			{
-				return testPoint.y >= 0 && testPoint.y < GameLogicController.LOGIC_HEIGHT &&
-				    testBlock == null;
-			}
-			else
-			{
-				return testPoint.x >= 0 && testPoint.x < GameLogicController.LOGIC_WIDTH &&
-					testBlock == null;
-			}
+			return testPoint.x >= 0 && testPoint.x < GameLogicController.LOGIC_WIDTH &&
+			       testPoint.y >= 0 && testPoint.y < GameLogicController.LOGIC_HEIGHT &&
+			       testBlock == null;
 		}
-		
-		private bool TestPositionValid(Vector2 testPos, bool isVertical)
+
+		private bool TestPositionValid(Vector2 testPos)
 		{
 			Point testPoint;
-			return TestPositionValid(testPos, isVertical, out testPoint);
+			return TestPositionValid(testPos, out testPoint);
 		}
 
 		private void CheckHorizontalMove()
@@ -225,9 +218,10 @@ namespace Pomutto
 			{
 				factor = 1;
 			}
-				
+			
 			if (factor != 0 && m_Tweener == null)
 			{
+				Debug.Log(string.Format("HorizontalMove: {0}", factor));	
 				m_Tweener = transform.DOLocalMoveX(Block.BLOCK_SIZE * factor, TweenDuration)
 					.SetRelative(true)
 					.SetEase(OUT_EASE_TYPE)
@@ -242,14 +236,14 @@ namespace Pomutto
 				Block checkBlock = IsRotateHorizontal ? LeftBlock : DownBlock;
 				Vector2 blockPos = GetMapPosition(checkBlock);
 				Vector2 testPos = new Vector2(blockPos.x - Block.BLOCK_SIZE, blockPos.y);
-				return TestPositionValid(testPos, false);
+				return TestPositionValid(testPos);
 			}
 			else
 			{
 				Block checkBlock = IsRotateHorizontal ? RightBlock : DownBlock;
 				Vector2 blockPos = GetMapPosition(checkBlock);
 				Vector2 testPos = new Vector2(blockPos.x + Block.BLOCK_SIZE, blockPos.y);
-				return TestPositionValid(testPos, false);
+				return TestPositionValid(testPos);
 			}
 		}
 
@@ -267,8 +261,6 @@ namespace Pomutto
 				return;
 			}
 
-			bool canRotate = false;
-			float currentX = transform.localPosition.x;
 			RotateTweenParam slaveParam = null;
 			RotateTweenParam masterParam = null;
 			// 贴左边界，从下往左旋转的情况
@@ -303,13 +295,35 @@ namespace Pomutto
 
 					break;
 				case ERotateType.Right:
-					slaveParam = new RotateTweenParam()
+					Vector2 blockPos = GetMapPosition(MasterBlock);
+					Vector2 testPos1 = new Vector2(blockPos.x, blockPos.y - Block.BLOCK_SIZE);
+					Vector2 testPos2 = new Vector2(blockPos.x + Block.BLOCK_SIZE, blockPos.y - Block.BLOCK_SIZE);
+					if (TestPositionValid(testPos1) && TestPositionValid(testPos2))
 					{
-						x = -1,
-						y = -1,
-						xEase = IN_EASE_TYPE,
-						yEase = OUT_EASE_TYPE
-					};
+						slaveParam = new RotateTweenParam()
+						{
+							x = -1,
+							y = -1,
+							xEase = IN_EASE_TYPE,
+							yEase = OUT_EASE_TYPE
+						};
+					}
+					else
+					{
+						slaveParam = new RotateTweenParam()
+						{
+							x = -1,
+							y = 0,
+							xEase = OUT_EASE_TYPE
+						};
+						masterParam = new RotateTweenParam()
+						{
+							x = 0,
+							y = 1,
+							yEase = OUT_EASE_TYPE
+						};
+					}
+
 					break;
 				case ERotateType.Down:
 					if (CanHorizontalMove(true))
@@ -351,84 +365,16 @@ namespace Pomutto
 			}
 
 			if (slaveParam != null)
-			{
 				m_Tweener = DoBlockTween(SlaveBlock, slaveParam);
-			}
 			if (masterParam != null)
-			{
 				m_Tweener = DoBlockTween(MasterBlock, masterParam);
-			}
 
 			if (m_Tweener != null)
-			{
 				m_Tweener.OnComplete(OnRotateTweenCompleted);
-			}
 
-					//				var upPos = GetMapPosition(UpBlock);
-//				Vector2 testPos = new Vector2(upPos.x - Block.BLOCK_SIZE, blockPos.y);
-//				m_Tweener = SlaveBlock.transform.DOLocalMoveY(Block.BLOCK_SIZE, TweenDuration)
-//					.SetRelative(true)
-//					.SetEase(Ease.OutQuad)
-//					.OnComplete(OnTweenCompleted);
-//				MasterBlock.transform.DOLocalMoveX(Block.BLOCK_SIZE, TweenDuration)
-//					.SetRelative(true)
-//					.SetEase(Ease.OutQuad);
-			}
-			// 贴右边界，从上往右旋转的情况
-//			if (currentX + Block.HALF_BLOCK_SIZE > GameLogicController.MAP_WIDTH &&
-//					 RotateType == ERotateType.Up)
-//			{
-//				m_Tweener = SlaveBlock.transform.DOLocalMoveY(-Block.BLOCK_SIZE, TweenDuration)
-//					.SetRelative(true)
-//					.SetEase(Ease.OutQuad)
-//					.OnComplete(OnTweenCompleted);
-//				MasterBlock.transform.DOLocalMoveX(-Block.BLOCK_SIZE, TweenDuration)
-//					.SetRelative(true)
-//					.SetEase(Ease.OutQuad);
-//			}
-//			else
-//			{
-//				int xFactor = 1;
-//				int yFactor = 1;
-//				Ease xEase = OUT_EASE_TYPE;
-//				Ease yEase = OUT_EASE_TYPE;
-//				switch (RotateType)
-//				{
-//					case ERotateType.Up:
-//						xFactor = 1;
-//						yFactor = -1;
-//						xEase = OUT_EASE_TYPE;
-//						yEase = IN_EASE_TYPE;
-//						break;
-//					case ERotateType.Right:
-//						xFactor = -1;
-//						yFactor = -1;
-//						xEase = IN_EASE_TYPE;
-//						yEase = OUT_EASE_TYPE;
-//						break;
-//					case ERotateType.Down:
-//						xFactor = -1;
-//						yFactor = 1;
-//						xEase = OUT_EASE_TYPE;
-//						yEase = IN_EASE_TYPE;
-//						break;
-//					case ERotateType.Left:
-//						xFactor = 1;
-//						yFactor = 1;
-//						xEase = IN_EASE_TYPE;
-//						yEase = OUT_EASE_TYPE;
-//						break;
-//				}
-//				// 从方块做一个圆弧轨迹旋转
-//				m_Tweener = SlaveBlock.transform.DOLocalMoveX(Block.BLOCK_SIZE * xFactor, TweenDuration)
-//					.SetRelative(true)
-//					.SetEase(xEase)
-//					.OnComplete(OnRotateTweenCompleted);
-//				SlaveBlock.transform.DOLocalMoveY(Block.BLOCK_SIZE * yFactor, TweenDuration)
-//					.SetRelative(true)
-//					.SetEase(yEase);
-//			}
-
+			if (slaveParam != null || masterParam != null)
+				RotateType = (ERotateType) (((int) RotateType + 1) % 4);
+		}
 
 		private Tweener DoBlockTween(Block block, RotateTweenParam param)
 		{
@@ -450,7 +396,7 @@ namespace Pomutto
 
 		private void OnRotateTweenCompleted()
 		{
-			RotateType = (ERotateType) (((int) RotateType + 1) % 4);
+			
 			OnTweenCompleted();
 		}
 		
