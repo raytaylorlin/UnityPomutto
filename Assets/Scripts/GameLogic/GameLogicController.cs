@@ -74,11 +74,13 @@ namespace Pomutto
 				m_Map.Add(row);
 			}
 
-			for (int j = 0; j < 7; j++)
+			List<List<int>> mapData = TestData.GenerateMapData();
+			for (int j = 0; j < mapData.Count; j++)
 			{
-				for (int i = 0; i < LOGIC_WIDTH - 3; i++)
+				for (int i = 0; i < mapData[j].Count; i++)
 				{
-					Block block = BlockPool.Instance.Spawn(BlockPrefab, MapTransform);
+					var data = mapData[j][i];
+					Block block = BlockPool.Instance.Spawn(BlockPrefab, MapTransform, data);
 					SetMap(i, j, block);
 				}
 			}
@@ -171,6 +173,7 @@ namespace Pomutto
 
 		public void StopBlock(Block block, Point finalPoint, bool realStop = true)
 		{
+			Debug.Log(string.Format("Stop block {0} at {1}", block, finalPoint));
 			block.Stop();
 			block.transform.SetParent(MapTransform);
 			SetMap(finalPoint.x, finalPoint.y, block);
