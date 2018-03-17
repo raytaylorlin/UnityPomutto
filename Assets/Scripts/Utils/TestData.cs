@@ -12,13 +12,23 @@ namespace Pomutto
             int logicWidth = GameLogicController.LOGIC_WIDTH;
             List<List<int>> map = new List<List<int>>();
 
-            for (int j = 0; j < 9; j++)
+            for (int j = 0; j < 10; j++)
             {
                 List<int> row = new List<int>();
-                for (int i = 0; i < logicWidth - 3; i++)
+                for (int i = 0; i < logicWidth; i++)
                 {
                     row.Add(1);
                 }
+                
+//                for (int i = 3; i < 4; i++)
+//                {
+//                    row.Add(-1);
+//                }
+//                
+//                for (int i = 4; i < logicWidth; i++)
+//                {
+//                    row.Add(1);
+//                }
                 map.Add(row);
             }
 

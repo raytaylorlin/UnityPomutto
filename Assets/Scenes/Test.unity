@@ -108,6 +108,48 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &201242073
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4109532295259876, guid: ef4ba82ea16842343a398ba376419305, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4109532295259876, guid: ef4ba82ea16842343a398ba376419305, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4109532295259876, guid: ef4ba82ea16842343a398ba376419305, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4109532295259876, guid: ef4ba82ea16842343a398ba376419305, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4109532295259876, guid: ef4ba82ea16842343a398ba376419305, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4109532295259876, guid: ef4ba82ea16842343a398ba376419305, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4109532295259876, guid: ef4ba82ea16842343a398ba376419305, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4109532295259876, guid: ef4ba82ea16842343a398ba376419305, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: ef4ba82ea16842343a398ba376419305, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &333268836
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,7 +357,7 @@ MonoBehaviour:
         x: 365
         y: 354
         width: 154
-        height: 64
+        height: 48
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
@@ -333,14 +375,6 @@ MonoBehaviour:
           isSystemEvent: 0
           isGlobal: 0
         toState: CheckClearBlocks
-        linkStyle: 0
-        linkConstraint: 0
-        colorIndex: 0
-      - fsmEvent:
-          name: GAME_OVER
-          isSystemEvent: 0
-          isGlobal: 1
-        toState: GameOver
         linkStyle: 0
         linkConstraint: 0
         colorIndex: 0
@@ -660,12 +694,14 @@ MonoBehaviour:
       hideUnused: 0
       transitions: []
       actionData:
-        actionNames: []
-        customNames: []
-        actionEnabled: 
-        actionIsOpen: 
-        actionStartIndex: 
-        actionHashCodes: 
+        actionNames:
+        - HutongGames.PlayMaker.Actions.CallMethod
+        customNames:
+        - 
+        actionEnabled: 01
+        actionIsOpen: 01
+        actionStartIndex: 00000000
+        actionHashCodes: 35355304
         unityObjectParams: []
         fsmGameObjectParams: []
         fsmOwnerDefaultParams: []
@@ -675,9 +711,46 @@ MonoBehaviour:
         fsmEventTargetParams: []
         fsmPropertyParams: []
         layoutOptionParams: []
-        fsmStringParams: []
-        fsmObjectParams: []
-        fsmVarParams: []
+        fsmStringParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          value: OnEnterGameOverState
+        fsmObjectParams:
+        - useVariable: 0
+          name: 
+          tooltip: 
+          showInInspector: 0
+          networkSync: 0
+          typeName: UnityEngine.MonoBehaviour
+          value: {fileID: 333268838}
+        fsmVarParams:
+        - variableName: 
+          objectType: 
+          useVariable: 0
+          type: -1
+          floatValue: 0
+          intValue: 0
+          boolValue: 0
+          stringValue: 
+          vector4Value: {x: 0, y: 0, z: 0, w: 0}
+          objectReference: {fileID: 0}
+          arrayValue:
+            useVariable: 0
+            name: 
+            tooltip: 
+            showInInspector: 0
+            networkSync: 0
+            type: -1
+            objectTypeName: 
+            floatValues: []
+            intValues: 
+            boolValues: 
+            stringValues: []
+            vector4Values: []
+            objectReferences: []
         fsmArrayParams: []
         fsmEnumParams: []
         fsmFloatParams: []
@@ -689,31 +762,45 @@ MonoBehaviour:
         fsmRectParams: []
         fsmQuaternionParams: []
         stringParams: []
-        byteData: 
-        arrayParamSizes: 
-        arrayParamTypes: []
+        byteData: 00
+        arrayParamSizes: 00000000
+        arrayParamTypes:
+        - HutongGames.PlayMaker.FsmVar
         customTypeSizes: 
         customTypeNames: []
-        paramDataType: 
-        paramName: []
-        paramDataPos: 
-        paramByteDataSize: 
+        paramDataType: 18000000120000000c0000002700000001000000
+        paramName:
+        - behaviour
+        - methodName
+        - parameters
+        - storeResult
+        - everyFrame
+        paramDataPos: 0000000000000000000000000000000000000000
+        paramByteDataSize: 0000000000000000000000000000000001000000
     - name: BlockGroupReset
       description: 
       colorIndex: 1
       position:
         serializedVersion: 2
-        x: 372
-        y: 247
-        width: 133
-        height: 32
+        x: 357
+        y: 252
+        width: 175
+        height: 48
       isBreakpoint: 0
       isSequence: 0
       hideUnused: 0
       transitions:
       - fsmEvent:
-          name: FINISHED
-          isSystemEvent: 1
+          name: GAME_OVER
+          isSystemEvent: 0
+          isGlobal: 1
+        toState: GameOver
+        linkStyle: 0
+        linkConstraint: 0
+        colorIndex: 0
+      - fsmEvent:
+          name: BLOCK_GROUP_RESET
+          isSystemEvent: 0
           isGlobal: 0
         toState: BlockGroupControl
         linkStyle: 0
@@ -806,6 +893,9 @@ MonoBehaviour:
     events:
     - name: FINISHED
       isSystemEvent: 1
+      isGlobal: 0
+    - name: BLOCK_GROUP_RESET
+      isSystemEvent: 0
       isGlobal: 0
     - name: CLEAR_BLOCKS_COMPLETED
       isSystemEvent: 0
@@ -1139,8 +1229,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b665cf6703ea444a06ef5844a97427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DownSpeed: 0
-  TweenDuration: 0
   Controller: {fileID: 0}
   SlaveBlock: {fileID: 0}
   MasterBlock: {fileID: 0}
@@ -1185,8 +1273,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b665cf6703ea444a06ef5844a97427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DownSpeed: -4
-  TweenDuration: 0.2
   Controller: {fileID: 333268838}
   SlaveBlock: {fileID: 0}
   MasterBlock: {fileID: 0}
@@ -1233,58 +1319,6 @@ Transform:
   m_Father: {fileID: 333268837}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1319778687
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1319778689}
-  - component: {fileID: 1319778688}
-  m_Layer: 0
-  m_Name: Config
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1319778688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1319778687}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cc18e9cbd286924c994902f8f3d39f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnergyGainPerBlock: 5
-  EnergyComboGainPerBlock: 0a0000000f00000014000000190000001e000000
-  JadeGainPerBlock: 0.5
-  JadComboGainPerBlock:
-  - 1
-  - 1.5
-  - 2
-  - 2.5
-  - 3
-  ObstacleBlockPerJade: 2
-  ObstacleBlockPerLargeJade: 4
-  EnergyGainPerLargeJade: 20
---- !u!4 &1319778689
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1319778687}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 745.8296, y: 538.4394, z: -296.12836}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1482885634
 GameObject:
   m_ObjectHideFlags: 0
@@ -1314,7 +1348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previewOnGUI: 1
   enableGUILayout: 1
-  drawStateLabels: 1
+  drawStateLabels: 0
   GUITextureStateLabels: 1
   GUITextStateLabels: 1
   filterLabelsWithDistance: 0
